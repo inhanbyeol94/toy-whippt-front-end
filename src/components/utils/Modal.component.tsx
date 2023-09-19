@@ -1,12 +1,12 @@
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import { IProp } from "../../interfaces/prop.interface";
-import { useState } from "react";
 import { useGlobalStore } from "../../stores/global.store";
-export const ModalComponent = ({ children, footer }: IProp) => {
+
+export const ModalComponent = ({ children, footer, modalTitle }: IProp) => {
   const { modal, setModal } = useGlobalStore();
   return (
     <Modal
-      title="Modal 1000px width"
+      title={modalTitle}
       centered
       open={modal}
       onCancel={() => setModal(false)}
