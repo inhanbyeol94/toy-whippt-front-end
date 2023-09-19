@@ -3,6 +3,7 @@ import { Layout, Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const { Header, Footer } = Layout;
+const { Item } = Menu;
 const AntLayout = () => {
   /* Use Navigate */
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const AntLayout = () => {
         width: "100%",
         display: "flex",
         alignItems: "center",
+        height: "6.8vh",
       }}
     >
       <Menu
@@ -66,21 +68,42 @@ const AntLayout = () => {
       <Menu
         theme="dark"
         selectable={false}
+        mode="horizontal"
         items={[
           {
-            key: "logout",
-            label: "로그아웃",
-            onClick: logout,
+            key: "profile",
+            icon: (
+              <img
+                src={
+                  "https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg"
+                }
+                style={{
+                  width: 40,
+                  height: 40,
+                  verticalAlign: "middle",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            ),
+
+            children: [
+              {
+                key: "logout",
+                label: "로그아웃",
+                onClick: logout,
+              },
+            ],
           },
         ]}
-      />
+      ></Menu>
     </Header>
   );
 };
 
 const AntFooter = () => {
   return (
-    <Footer style={{ textAlign: "center" }}>
+    <Footer style={{ textAlign: "center", height: "6.8vh" }}>
       항해커톤 프로젝트 ©2023 Created by 채찍피티
     </Footer>
   );
