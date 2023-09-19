@@ -58,8 +58,6 @@ export const IndexComponent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [modalData, setModalData] = useState<IQuestion>();
 
-  console.log(modalData);
-
   /* Store */
   const { setModal } = useGlobalStore();
 
