@@ -7,6 +7,7 @@ import { MyQuestions } from "../pages/MyQuestions";
 import { Study } from "../pages/Study";
 import { Community } from "../pages/Community";
 import GlobalStyles from "../GlobalStyles";
+import { Write } from "../pages/Write";
 const Router = () => {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ const Router = () => {
           <Route path="/my/questions" element={<MyQuestions />}></Route>
           <Route path="/community" element={<Community />}></Route>
           <Route path="/study" element={<Study />}></Route>
+          <Route path="/write" element={<Write />}></Route>
         </Routes>
         <AntFooter />
       </Layout>

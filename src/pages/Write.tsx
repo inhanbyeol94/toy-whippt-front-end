@@ -4,9 +4,10 @@ import { IndexComponent } from "../components/myQuestion/Index.component";
 import React from "react";
 import { ModalComponent } from "../components/utils/Modal.component";
 import { MyQuestionModalComponent } from "../components/myQuestion/MyQuestion.modal.component";
+import { WriteComponent } from "../components/utils/Write.component";
 
 const { Content, Sider } = Layout;
-export const MyQuestions = () => {
+export const Write = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -22,7 +23,7 @@ export const MyQuestions = () => {
             height: "84vh",
           }}
         >
-          <IndexComponent />
+          <WriteComponent />
         </Layout>
       </Content>
     </>
