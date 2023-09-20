@@ -146,7 +146,7 @@ export const IndexComponent = () => {
               rules={requiredRule.topic}
             >
               <Select
-                size={"large"}
+                size="middle"
                 options={[{ label: "자바스크립트", value: 1 }]}
                 placeholder="언어"
               />
@@ -158,7 +158,7 @@ export const IndexComponent = () => {
               rules={requiredRule.questionType}
             >
               <Select
-                size={"large"}
+                size="middle"
                 options={[{ label: "라이브러리 질문", value: 1 }]}
                 placeholder="질문 유형"
               />
@@ -169,7 +169,7 @@ export const IndexComponent = () => {
               rules={requiredRule.library}
             >
               <S.LibraryInput
-                size={"large"}
+                size="middle"
                 placeholder="라이브러리를 입력해주세요."
               />
             </S.Library>
@@ -184,7 +184,7 @@ export const IndexComponent = () => {
                 onKeyDown={promptHandler}
                 placeholder={"여기에 프롬프트를 입력해주세요."}
                 autoSize={{ minRows: 2, maxRows: 2 }}
-                size={"large"}
+                size="middle"
               />
             </S.FormTitle>
 

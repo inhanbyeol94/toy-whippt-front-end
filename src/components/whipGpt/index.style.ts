@@ -18,8 +18,19 @@ export const S = {
       display: flex;
       flex-direction: column;
       overflow: auto;
-      height: 60vh;
+      height: 64vh;
       padding: 20px 20% 20px 20%;
+      
+      // 스크롤바 전체 영역
+      &::-webkit-scrollbar {
+        width: 7px;
+      }
+      // 스크롤바 막대
+      &::-webkit-scrollbar-thumb {
+        background-color: #F0F0F0;
+        border: 1px solid #F0F0F0;
+        border-radius: 12px;
+      }
     `,
     ChatBox: styled.div`
       display: flex;
@@ -42,7 +53,7 @@ export const S = {
       padding: 10px 15px 10px 15px;
       max-width: 700px;
       display: inline-block;
-      box-shadow: 0 5px 10px #f1f0e8;
+      box-shadow: 0 3px 5px #f1f0e8;
     `,
     AnswerContent: styled.div`
       border-radius: 20px;
@@ -53,7 +64,7 @@ export const S = {
       display: inline-block;
       line-height: 1.5;
       font-size: 15px;
-      box-shadow: 0 5px 10px #f1f0e8;
+      box-shadow: 0 3px 5px #f1f0e8;
       margin-bottom: 30px;
     `,
     Bar: styled.hr`
@@ -102,8 +113,8 @@ export const S = {
       padding-left: 20px;
     `,
     SendButton: styled(Button)`
-      width: 66px !important;
-      height: 66px;
+      width: 55px !important;
+      height: 55px;
       border-radius: 15px;
     `,
 }
