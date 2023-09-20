@@ -1,9 +1,9 @@
 import React from "react";
-import { Layout, Menu } from "antd";
+import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
+import { S } from './antLayout.style'
 
-const { Header, Footer } = Layout;
-const { Item } = Menu;
+const { Item, SubMenu } = Menu;
 const AntLayout = () => {
   /* Use Navigate */
   const navigate = useNavigate();
@@ -18,17 +18,7 @@ const AntLayout = () => {
 
   /* Component */
   return (
-    <Header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 1,
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        height: "6.8vh",
-      }}
-    >
+    <S.Header>
       <Menu
         theme="dark"
         selectable={false}
@@ -69,43 +59,20 @@ const AntLayout = () => {
         theme="dark"
         selectable={false}
         mode="horizontal"
-        items={[
-          {
-            key: "profile",
-            icon: (
-              <img
-                src={
-                  "https://hips.hearstapps.com/hmg-prod/images/russian-blue-royalty-free-image-1658451809.jpg"
-                }
-                style={{
-                  width: 40,
-                  height: 40,
-                  verticalAlign: "middle",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
-              />
-            ),
-
-            children: [
-              {
-                key: "logout",
-                label: "로그아웃",
-                onClick: logout,
-              },
-            ],
-          },
-        ]}
-      ></Menu>
-    </Header>
+      >
+          <SubMenu key="profile" title={<S.ProfileImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7KXl1OoaqbsnfYj5JV6kzjIBnhRkw7myjlQ&usqp=CAU"/>}>
+              <Menu.Item key="logout" children="로그아웃" onClick={logout} />
+          </SubMenu>
+      </Menu>
+    </S.Header>
   );
 };
 
 const AntFooter = () => {
   return (
-    <Footer style={{ textAlign: "center", height: "6.8vh" }}>
+    <S.Footer>
       항해커톤 프로젝트 ©2023 Created by 채찍피티
-    </Footer>
+    </S.Footer>
   );
 };
 

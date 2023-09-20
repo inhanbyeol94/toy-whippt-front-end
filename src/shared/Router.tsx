@@ -6,10 +6,12 @@ import { WhipGPT } from "../pages/WhipGPT";
 import { MyQuestions } from "../pages/MyQuestions";
 import { Study } from "../pages/Study";
 import { Community } from "../pages/Community";
+import GlobalStyles from "../GlobalStyles";
 import { Write } from "../pages/Write";
 const Router = () => {
   return (
     <BrowserRouter>
+      <GlobalStyles />
       <Layout>
         <AntLayout />
         <Routes>

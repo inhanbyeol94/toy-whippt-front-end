@@ -1,15 +1,10 @@
 import React from "react";
-import { Layout, Menu } from "antd";
-import { IProp } from "../../interfaces/prop.interface";
+import { Menu } from "antd";
+import { S } from './sidebar.style'
 
-const { Sider } = Layout;
-
-export const SidebarComponent = ({ bgColor }: IProp) => {
+export const SidebarComponent = () => {
   return (
-    <Sider
-      style={{
-        background: bgColor,
-      }}
+    <S.Sider
       width={300}
     >
       <Menu
@@ -85,6 +80,6 @@ export const SidebarComponent = ({ bgColor }: IProp) => {
           },
         ]}
       />
-    </Sider>
+    </S.Sider>
   );
 };
