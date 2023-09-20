@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Form, Select } from "antd";
+import { Form, Select, Button } from "antd";
 import { IoIosCopy, IoIosShareAlt } from "react-icons/io";
 import { AiOutlineSend } from "react-icons/ai";
-import { S } from './index.style'
+import { S } from './whipGpt.style'
 import { IWhipGPTData } from "../../interfaces/api/requests/whipGPT.interface";
 
 export const IndexComponent = () => {
@@ -80,12 +80,12 @@ export const IndexComponent = () => {
               https://expressjs.com/ko/
             </p>
             <S.ButtonBox>
-              <S.ShareButton icon={<IoIosShareAlt />}>
+              <Button icon={<IoIosShareAlt />}>
                 커뮤니티 공유
-              </S.ShareButton>
-              <S.CopyButton icon={<IoIosCopy />}>
+              </Button>
+              <Button icon={<IoIosCopy />}>
                 복사
-              </S.CopyButton>
+              </Button>
             </S.ButtonBox>
           </S.AnswerContent>
           </S.ChatBox>
@@ -105,12 +105,12 @@ export const IndexComponent = () => {
               그건 알려드릴 수 없습니다, 저의 구뇌구조는 국가 기밀 사항이에요.
             </p>
             <S.ButtonBox>
-              <S.ShareButton icon={<IoIosShareAlt />}>
+              <Button icon={<IoIosShareAlt />}>
                 커뮤니티 공유
-              </S.ShareButton>
-              <S.CopyButton icon={<IoIosCopy />}>
+              </Button>
+              <Button icon={<IoIosCopy />}>
                 복사
-              </S.CopyButton>
+              </Button>
             </S.ButtonBox>
           </S.AnswerContent>
           </S.ChatBox>
@@ -127,12 +127,12 @@ export const IndexComponent = () => {
           <S.AnswerContent>
             <p>좋은 정보를 제공해주셔서 감사합니다.</p>
             <S.ButtonBox>
-              <S.ShareButton icon={<IoIosShareAlt />}>
+              <Button icon={<IoIosShareAlt />}>
                 커뮤니티 공유
-              </S.ShareButton>
-              <S.CopyButton icon={<IoIosCopy />}>
+              </Button>
+              <Button icon={<IoIosCopy />}>
                 복사
-              </S.CopyButton>
+              </Button>
             </S.ButtonBox>
           </S.AnswerContent>
           </S.ChatBox>
