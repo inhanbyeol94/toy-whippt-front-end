@@ -1,6 +1,5 @@
 import { Button, Form, Input, Layout } from "antd";
 import styled from "styled-components";
-// import {IWhipGPTData} from "../../interfaces/api/whipGPT.interface";
 
 const { Content } = Layout;
 const { TextArea } = Input;
