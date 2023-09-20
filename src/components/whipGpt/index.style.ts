@@ -1,0 +1,109 @@
+import { Button, Form, Input, Layout } from "antd";
+import styled from "styled-components";
+// import {IWhipGPTData} from "../../interfaces/api/whipGPT.interface";
+
+const { Content } = Layout;
+const { TextArea } = Input;
+
+export const S = {
+    Content: styled(Content)`
+    padding: 0 24px;
+    `,
+    Container: styled.div`
+      height: 79vh;
+      background-color: rgba(0, 0, 0, 0.03);
+      border-radius: 10px;
+    `,
+    ChatContainer: styled.div`
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      height: 60vh;
+      padding: 20px 20% 20px 20%;
+    `,
+    ChatBox: styled.div`
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    `,
+    WriteContent: styled.div`
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    `,
+    CreationTime: styled.span`
+    font-size: 12px;
+      color: gray;
+    `,
+    CreatedContent: styled.span`
+      border-radius: 20px;
+      background-color: #1677ff;
+      color: white;
+      padding: 10px 15px 10px 15px;
+      max-width: 700px;
+      display: inline-block;
+      box-shadow: 0 5px 10px #f1f0e8;
+    `,
+    AnswerContent: styled.div`
+      border-radius: 20px;
+      background-color: white;
+      color: black;
+      padding: 10px 25px 20px 25px;
+      width: 100%;
+      display: inline-block;
+      line-height: 1.5;
+      font-size: 15px;
+      box-shadow: 0 5px 10px #f1f0e8;
+      margin-bottom: 30px;
+    `,
+    Bar: styled.hr`
+      border-top: 1px;
+      border-color: #d8d9da;
+      margin: 0 100px 0 100px;
+    `,
+    ButtonBox: styled.div`
+      margin-top: 10px;
+    `,
+    ShareButton: styled(Button)`
+     margin-right: 10px;
+    `,
+    CopyButton: styled(Button)`
+    `,
+    FormBox: styled.div`
+      display: flex;
+      padding: 15px 20% 0 20%;
+    `,
+    FormTitle: styled(Form.Item)`
+      width: 100%;
+      margin-right: 10px;
+    `,
+    Language: styled(Form.Item)`
+      width: 220px;
+      margin-right: 10px;
+    `,
+    QuestionType: styled(Form.Item)`
+      width: 270px;
+      margin-right: 10px;
+    `,
+    Library: styled(Form.Item)`
+      width: 100%;
+    `,
+    LibraryInput: styled(Input)`
+      border-radius: 10px;
+    `,
+    TextAreaBox: styled.div`
+      display: flex;
+      padding: 0 20% 0 20%;
+    `,
+    TextArea: styled(TextArea)`
+      resize: none;
+      border-radius: 15px;
+      overflow: hidden;
+      padding-left: 20px;
+    `,
+    SendButton: styled(Button)`
+      width: 66px !important;
+      height: 66px;
+      border-radius: 15px;
+    `,
+}
