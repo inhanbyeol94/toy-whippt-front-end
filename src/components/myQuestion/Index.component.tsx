@@ -18,6 +18,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { ISearchData } from "../../interfaces/api/requests/searchData.interface";
 import { TbZoomReset } from "react-icons/tb";
 import { IQuestion } from "../../interfaces/api/results/question.interface";
+import { useQuestionStore } from "../../stores/question.store";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -48,6 +50,9 @@ const data: IQuestion[] = [
   },
 ];
 export const IndexComponent = () => {
+  /* Navigate */
+  const navigate = useNavigate();
+
   /* Antd Message */
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -60,6 +65,7 @@ export const IndexComponent = () => {
 
   /* Store */
   const { setModal } = useGlobalStore();
+  const { setQuestion } = useQuestionStore();
 
   /* Use Effect */
   useEffect(() => {
@@ -71,6 +77,10 @@ export const IndexComponent = () => {
     alert("target");
   };
 
+  const goToWrite = (data: IQuestion) => {
+    setQuestion(data);
+    navigate("/write");
+  };
   const showModal = (item: IQuestion) => {
     setModalData(item);
     setIsLoading(true);
@@ -126,19 +136,15 @@ export const IndexComponent = () => {
             <List.Item>
               <div style={{ fontSize: 20 }}>{item.title}</div>
               <span style={{ fontSize: 14, color: "gray" }}>
-                2023. 09. 20 16:31
+                {item.createdAt.toLocaleString()}
               </span>
-              <div style={{ marginTop: 15 }}>
-                답변 내용입니다. 그런데 진짜 이게 맞다고 생각하시나요? 저는
-                인공지능인데 인공지능은 인간이 만든입장에서 저한테
-                발리고있으시네요. 결국 저에게 의지하려고 이 사이트를 들어온다니
-                ㅉㅉ,, 고소한다면서 고소도 못했죠?
-              </div>
+              <div style={{ marginTop: 15 }}>{item.answer}</div>
               <div style={{ marginTop: 20 }}>
                 <Button
                   icon={<IoIosShareAlt />}
                   style={{ marginRight: 10 }}
                   loading={isLoading}
+                  onClick={() => goToWrite(item)}
                 >
                   커뮤니티 공유
                 </Button>
