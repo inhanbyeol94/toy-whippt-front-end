@@ -8,7 +8,6 @@ import { MyQuestions } from "../pages/MyQuestions";
 import { Study } from "../pages/Study";
 import { Community } from "../pages/Community";
 import { Login } from "../pages/Login";
-import GlobalStyles from "../GlobalStyles";
 import { Write } from "../pages/Write";
 
 const Router = () => {
