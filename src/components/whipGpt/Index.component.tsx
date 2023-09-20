@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Form, Select } from "antd";
 import { IoIosCopy, IoIosShareAlt } from "react-icons/io";
 import { AiOutlineSend } from "react-icons/ai";
-import { IWhipGPTData } from "../../interfaces/api/whipGPT.interface";
 import { S } from './index.style'
+import { IWhipGPTData } from "../../interfaces/api/requests/whipGPT.interface";
 
 export const IndexComponent = () => {
   /* Form */
