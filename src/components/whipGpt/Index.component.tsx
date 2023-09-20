@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Input, Layout, Select } from "antd";
 import { IoIosCopy, IoIosShareAlt } from "react-icons/io";
 import { AiOutlineSend } from "react-icons/ai";
-import { IWhipGPTData } from "../../interfaces/api/whipGPT.interface";
+import { IWhipGPTData } from "../../interfaces/api/requests/whipGPT.interface";
 
 const { Content } = Layout;
 const { TextArea } = Input;
