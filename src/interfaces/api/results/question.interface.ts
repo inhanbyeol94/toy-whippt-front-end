@@ -8,3 +8,9 @@ export interface IQuestion {
   library: string;
   questionId: number;
 }
+
+export interface ICommunity {
+  title: string;
+  contents: string;
+  communityId: number;
+}
