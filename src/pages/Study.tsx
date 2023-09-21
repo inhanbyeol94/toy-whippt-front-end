@@ -1,3 +1,5 @@
+import {IndexComponent} from "../components/study/index.component";
+
 export const Study = () => {
-  return <>Study Page</>;
+  return <IndexComponent />
 };
