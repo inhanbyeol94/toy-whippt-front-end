@@ -24,7 +24,7 @@ const S = {
       margin: 16px 0 0 0;
     `,
     Layout: styled(Layout)`
-      height: 84vh;
+      height: 84.7vh;
       padding: 24px 0;
       border-radius: 10px;
       background-color: var(--sub-color);

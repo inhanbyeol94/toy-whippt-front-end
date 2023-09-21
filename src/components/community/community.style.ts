@@ -12,7 +12,7 @@ export const S = {
       display: flex;
       flex-direction: column;
       overflow: auto;
-      height: 84vh;
+      height: 84.7vh;
       padding: 30px 15% 0 15%;
       border-radius: 10px;
       background-color: var(--sub-color);

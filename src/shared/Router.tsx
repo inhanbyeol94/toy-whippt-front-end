@@ -9,6 +9,7 @@ import { Study } from "../pages/Study";
 import { Community } from "../pages/Community";
 import { Login } from "../pages/Login";
 import { Write } from "../pages/Write";
+import {Documents} from "../components/community/Documents";
 
 const Router = () => {
   return (
@@ -23,6 +24,7 @@ const Router = () => {
           <Route path="/community" element={<Community />}></Route>
           <Route path="/study" element={<Study />}></Route>
           <Route path="/write" element={<Write />}></Route>
+          <Route path="/documents/:code" element={<Documents />}></Route>
         </Routes>
         <AntFooter />
       </Layout>

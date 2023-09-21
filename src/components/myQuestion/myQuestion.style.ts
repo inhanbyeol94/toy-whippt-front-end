@@ -35,9 +35,9 @@ export const S = {
       border-radius: 5px;
     `,
     ListContainer: styled.div`
-      height: 68vh;
+      height: 62vh;
       overflow: auto;
-      margin-top: 50px;
+      margin-top: 20px;
 
       // 스크롤바 전체 영역
       &::-webkit-scrollbar {

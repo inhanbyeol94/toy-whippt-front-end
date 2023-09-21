@@ -24,6 +24,7 @@ const data: ICommunity[] = [
     },
 ];
 export const CommunityComp = () => {
+
     /* Antd Message */
     const [messageApi, contextHolder] = message.useMessage();
 

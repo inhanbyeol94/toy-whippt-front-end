@@ -6,7 +6,8 @@ const { TextArea } = Input;
 
 export const S = {
     Content: styled(Content)`
-    padding: 0 24px;
+      padding: 0 24px;
+      overflow: hidden;
     `,
     Container: styled.div`
       height: 79vh;
