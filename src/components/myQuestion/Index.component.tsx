@@ -60,8 +60,13 @@ export const IndexComponent = () => {
   const [modalData, setModalData] = useState<IQuestion>();
 
   /* Store */
-  const { setModal } = useGlobalStore();
+  const { setHeader, setSpin, setModal } = useGlobalStore();
   const { setQuestion } = useQuestionStore();
+
+  useEffect(() => {
+    setHeader(true);
+    setSpin(false);
+  }, []);
 
   /* Use Effect */
   useEffect(() => {

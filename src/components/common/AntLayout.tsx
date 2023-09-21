@@ -1,16 +1,34 @@
 import React from "react";
 import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { S } from './antLayout.style'
+import { S } from "./antLayout.style";
+import { useAuthQueries } from "../../queries/auth.query";
+import { useGlobalStore } from "../../stores/global.store";
 
 const { Item, SubMenu } = Menu;
 const AntLayout = () => {
+  /* Query */
+  const { logout, userInfoData } = useAuthQueries();
+
+  /* Store */
+  const { setSpin } = useGlobalStore();
+
   /* Use Navigate */
   const navigate = useNavigate();
 
   /* Handle Function */
-  const logout = async (): Promise<void> => {
-    alert("target");
+  const logoutHandler = () => {
+    logout.mutate(undefined, {
+      onSuccess: (data) => {
+        if (data.result == true) {
+          setSpin(true);
+          navigate("/login");
+        }
+      },
+      onError: (error) => {
+        console.log(error.message);
+      },
+    });
   };
 
   /* Etc */
@@ -40,40 +58,47 @@ const AntLayout = () => {
           {
             key: "index",
             label: "항해피티",
-            onClick: () => navigate("/"),
+            onClick: () => {
+              navigate("/");
+            },
           },
           {
             key: "my/questions",
-            label: "내질문",
-            onClick: () => navigate("/my/questions"),
+            label: "내 질문",
+            onClick: () => {
+              navigate("/my/questions");
+            },
           },
           {
             key: "community",
             label: "커뮤니티",
-            onClick: () => navigate("/community"),
+            onClick: () => {
+              navigate("/community");
+            },
           },
-          { key: "study", label: "스터디", onClick: () => navigate("/study") },
+          {
+            key: "study",
+            label: "스터디",
+            onClick: () => {
+              navigate("/study");
+            },
+          },
         ]}
       />
-      <Menu
-        theme="dark"
-        selectable={false}
-        mode="horizontal"
-      >
-          <SubMenu key="profile" title={<S.ProfileImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7KXl1OoaqbsnfYj5JV6kzjIBnhRkw7myjlQ&usqp=CAU"/>}>
-              <Menu.Item key="logout" children="로그아웃" onClick={logout} />
-          </SubMenu>
+      <Menu theme="dark" selectable={false} mode="horizontal">
+        <SubMenu
+          key="profile"
+          title={<S.ProfileImg src={userInfoData?.profileImgUrl} />}
+        >
+          <Menu.Item key="logout" children="로그아웃" onClick={logoutHandler} />
+        </SubMenu>
       </Menu>
     </S.Header>
   );
 };
 
 const AntFooter = () => {
-  return (
-    <S.Footer>
-      항해커톤 프로젝트 ©2023 Created by 채찍피티
-    </S.Footer>
-  );
+  return <S.Footer>항해커톤 프로젝트 ©2023 Created by 채찍피티</S.Footer>;
 };
 
 export { AntLayout, AntFooter };
