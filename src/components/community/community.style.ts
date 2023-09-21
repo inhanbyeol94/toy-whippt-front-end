@@ -41,7 +41,7 @@ export const S = {
       margin-right: 10px;
     `,
     QuestionType: styled(Form.Item)`
-      width: 150px;
+      width: 185px;
       margin-right: 10px;
     `,
     Library: styled(Form.Item)`
