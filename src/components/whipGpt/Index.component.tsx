@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Select } from "antd";
+import { Form, Select, Button } from "antd";
 import { IoIosCopy, IoIosShareAlt } from "react-icons/io";
 import { AiOutlineSend } from "react-icons/ai";
 import { S } from "./index.style";
@@ -78,23 +78,25 @@ export const IndexComponent = () => {
               </S.CreatedContent>
             </S.WriteContent>
 
-            <S.AnswerContent>
-              <p>
-                에휴 그건 저도모르죠.. Express 공식사이트에 널려있는게 정보인데
-                그걸 왜 저한테 물어보세요?
-                <br />
-                정말 한심하지만, 공식사이트 링크정도는 공유드리죠.
-                <br />
-                <br />
-                https://expressjs.com/ko/
-              </p>
-              <S.ButtonBox>
-                <S.ShareButton icon={<IoIosShareAlt />}>
-                  커뮤니티 공유
-                </S.ShareButton>
-                <S.CopyButton icon={<IoIosCopy />}>복사</S.CopyButton>
-              </S.ButtonBox>
-            </S.AnswerContent>
+          <S.AnswerContent>
+            <p>
+              에휴 그건 저도모르죠.. Express 공식사이트에 널려있는게 정보인데
+              그걸 왜 저한테 물어보세요?
+              <br />
+              정말 한심하지만, 공식사이트 링크정도는 공유드리죠.
+              <br />
+              <br />
+              https://expressjs.com/ko/
+            </p>
+            <S.ButtonBox>
+              <Button icon={<IoIosShareAlt />}>
+                커뮤니티 공유
+              </Button>
+              <Button icon={<IoIosCopy />}>
+                복사
+              </Button>
+            </S.ButtonBox>
+          </S.AnswerContent>
           </S.ChatBox>
           <S.ChatBox>
             <S.WriteContent>
@@ -106,17 +108,19 @@ export const IndexComponent = () => {
               </S.CreatedContent>
             </S.WriteContent>
 
-            <S.AnswerContent>
-              <p>
-                그건 알려드릴 수 없습니다, 저의 구뇌구조는 국가 기밀 사항이에요.
-              </p>
-              <S.ButtonBox>
-                <S.ShareButton icon={<IoIosShareAlt />}>
-                  커뮤니티 공유
-                </S.ShareButton>
-                <S.CopyButton icon={<IoIosCopy />}>복사</S.CopyButton>
-              </S.ButtonBox>
-            </S.AnswerContent>
+          <S.AnswerContent>
+            <p>
+              그건 알려드릴 수 없습니다, 저의 구뇌구조는 국가 기밀 사항이에요.
+            </p>
+            <S.ButtonBox>
+              <Button icon={<IoIosShareAlt />}>
+                커뮤니티 공유
+              </Button>
+              <Button icon={<IoIosCopy />}>
+                복사
+              </Button>
+            </S.ButtonBox>
+          </S.AnswerContent>
           </S.ChatBox>
           <S.ChatBox>
             <S.WriteContent>
@@ -125,16 +129,17 @@ export const IndexComponent = () => {
               </p>
               <S.CreatedContent>난 정식으로 너를 고소할거야.</S.CreatedContent>
             </S.WriteContent>
-
-            <S.AnswerContent>
-              <p>좋은 정보를 제공해주셔서 감사합니다.</p>
-              <S.ButtonBox>
-                <S.ShareButton icon={<IoIosShareAlt />}>
-                  커뮤니티 공유
-                </S.ShareButton>
-                <S.CopyButton icon={<IoIosCopy />}>복사</S.CopyButton>
-              </S.ButtonBox>
-            </S.AnswerContent>
+          <S.AnswerContent>
+            <p>좋은 정보를 제공해주셔서 감사합니다.</p>
+            <S.ButtonBox>
+              <Button icon={<IoIosShareAlt />}>
+                커뮤니티 공유
+              </Button>
+              <Button icon={<IoIosCopy />}>
+                복사
+              </Button>
+            </S.ButtonBox>
+          </S.AnswerContent>
           </S.ChatBox>
         </S.ChatContainer>
         <S.Bar />

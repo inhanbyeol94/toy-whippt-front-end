@@ -6,7 +6,8 @@ const { TextArea } = Input;
 
 export const S = {
     Content: styled(Content)`
-    padding: 0 24px;
+      padding: 0 24px;
+      overflow: hidden;
     `,
     Container: styled.div`
       height: 79vh;
@@ -50,6 +51,7 @@ export const S = {
       background-color: #1677ff;
       color: white;
       padding: 10px 15px 10px 15px;
+      line-height: 1.5;
       max-width: 700px;
       display: inline-block;
       box-shadow: 0 3px 5px #f1f0e8;
@@ -72,12 +74,9 @@ export const S = {
       margin: 0 100px 0 100px;
     `,
     ButtonBox: styled.div`
+      gap: 10px;
+      display: flex;
       margin-top: 10px;
-    `,
-    ShareButton: styled(Button)`
-     margin-right: 10px;
-    `,
-    CopyButton: styled(Button)`
     `,
     FormBox: styled.div`
       display: flex;

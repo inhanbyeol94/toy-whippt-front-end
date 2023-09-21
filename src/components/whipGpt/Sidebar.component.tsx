@@ -10,7 +10,7 @@ export const SidebarComponent = () => {
       <Menu
         mode="inline"
         defaultOpenKeys={["sub1"]}
-        style={{ overflow: "auto", height: "79vh" }}
+        style={{ overflow: "auto", height: "80vh" }}
         items={[
           {
             key: "sub1",

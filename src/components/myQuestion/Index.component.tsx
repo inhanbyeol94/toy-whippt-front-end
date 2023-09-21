@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {
-  Button,
-  FloatButton,
-  Form,
-  Input,
-  Layout,
-  List,
-  message,
-  Tooltip,
+    Button,
+    FloatButton,
+    Form,
+    List,
+    message, Select,
+    Tooltip,
 } from "antd";
 import { IoIosCopy, IoIosShareAlt } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -20,9 +18,7 @@ import { TbZoomReset } from "react-icons/tb";
 import { IQuestion } from "../../interfaces/api/results/question.interface";
 import { useQuestionStore } from "../../stores/question.store";
 import { useNavigate } from "react-router-dom";
-
-const { Content } = Layout;
-const { Search } = Input;
+import { S } from './myQuestion.style'
 
 const data: IQuestion[] = [
   {
@@ -104,34 +100,90 @@ export const IndexComponent = () => {
     },
   ];
 
+    const requiredRule = {
+        topic: [
+            {
+                required: true,
+                message: "언어를 선택해주세요.",
+            },
+        ],
+        questionType: [
+            {
+                required: true,
+                message: "질문 유형을 선택해주세요.",
+            },
+        ],
+        title: [
+            {
+                required: true,
+                whitespace: true,
+                message: "질문을 입력해주세요.",
+            },
+        ],
+        library: [
+            {
+                required: true,
+                whitespace: true,
+                message: "라이브러리를 입력해주세요.",
+            },
+        ],
+    };
+
   /* Component */
   return (
-    <Content style={{ padding: "10px 15% 0 15%" }}>
+    <S.Content>
       {contextHolder}
       <Form form={form} onFinish={submit}>
         <Form.Item name="searchData" required={true} rules={formRules}>
-          <Input
+          <S.SearchInput
             size={"large"}
             placeholder={"검색할 이전 프롬포트를 입력해주세요."}
-            style={{ borderRadius: 20, paddingLeft: 20, marginRight: 10 }}
             disabled={isLoading}
             suffix={
-              <AiOutlineSearch
+              <AiOutlineSearch cursor="pointer"
                 onClick={() => form.submit()}
-                style={{ cursor: "pointer" }}
               />
             }
           />
         </Form.Item>
       </Form>
+        <S.SelectBox>
+            <S.Language
+                name="topic"
+                required={true}
+                rules={requiredRule.topic}
+            >
+                <Select
+                    size="small"
+                    options={[{ label: "자바스크립트", value: 1 }]}
+                    placeholder="언어"
+                />
+            </S.Language>
 
-      <div
-        style={{
-          marginTop: 50,
-          overflow: "auto",
-          height: "68vh",
-        }}
-      >
+            <S.QuestionType
+                name="questionType"
+                required={true}
+                rules={requiredRule.questionType}
+            >
+                <Select
+                    size="small"
+                    options={[{ label: "라이브러리 질문", value: 1 }]}
+                    placeholder="질문 유형"
+                />
+            </S.QuestionType>
+            <S.Library
+                name="library"
+                required={true}
+                rules={requiredRule.library}
+            >
+                <S.LibraryInput
+                    size="small"
+                    placeholder="라이브러리를 입력해주세요."
+                />
+            </S.Library>
+        </S.SelectBox>
+
+        <S.ListContainer>
         <List
           itemLayout="vertical"
           size={"large"}
@@ -139,15 +191,14 @@ export const IndexComponent = () => {
           dataSource={data}
           renderItem={(item) => (
             <List.Item>
-              <div style={{ fontSize: 20 }}>{item.title}</div>
-              <span style={{ fontSize: 14, color: "gray" }}>
+              <S.Title>{item.title}</S.Title>
+              <S.CreationTime>
                 {item.createdAt.toLocaleString()}
-              </span>
-              <div style={{ marginTop: 15 }}>{item.answer}</div>
-              <div style={{ marginTop: 20 }}>
+              </S.CreationTime>
+              <S.Answer>{item.answer}</S.Answer>
+              <S.ButtonBox>
                 <Button
                   icon={<IoIosShareAlt />}
-                  style={{ marginRight: 10 }}
                   loading={isLoading}
                   onClick={() => goToWrite(item)}
                 >
@@ -166,7 +217,6 @@ export const IndexComponent = () => {
                 >
                   <Button
                     icon={<IoIosCopy />}
-                    style={{ marginRight: 10 }}
                     loading={isLoading}
                   >
                     복사
@@ -174,17 +224,16 @@ export const IndexComponent = () => {
                 </CopyToClipboard>
                 <Button
                   icon={<IoDocumentText />}
-                  style={{ marginRight: 10 }}
                   loading={isLoading}
                   onClick={() => showModal(item)}
                 >
                   자세히 보기
                 </Button>
-              </div>
+              </S.ButtonBox>
             </List.Item>
           )}
         />
-      </div>
+      </S.ListContainer>
       <Tooltip placement="left" title="클릭 시 검색 데이터가 초기화됩니다.">
         <FloatButton
           type="primary"
@@ -193,6 +242,6 @@ export const IndexComponent = () => {
         />
       </Tooltip>
       <MyQuestionModalComponent questionData={modalData} />
-    </Content>
+    </S.Content>
   );
 };

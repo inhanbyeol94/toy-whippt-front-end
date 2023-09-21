@@ -1,4 +1,4 @@
-import { IQuestion } from "./api/results/question.interface";
+import {ICommunity, IQuestion} from "./api/results/question.interface";
 
 export interface IProp {
   bgColor?: string;
@@ -7,4 +7,5 @@ export interface IProp {
   footer?: React.ReactNode[];
   questionData?: IQuestion;
   modalTitle?: string;
+  communityData?: ICommunity;
 }

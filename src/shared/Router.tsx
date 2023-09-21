@@ -13,6 +13,7 @@ import { PrivateRoute } from "./util/PrivateRoute";
 import { GuestRoute } from "./util/GuestRoute";
 import { useGlobalStore } from "../stores/global.store";
 import { Transition } from "react-transition-group";
+import {Documents} from "../components/community/Documents";
 
 const Router = () => {
   const { header, spin } = useGlobalStore();
@@ -37,6 +38,7 @@ const Router = () => {
               <Route path="/community" element={<Community />}></Route>
               <Route path="/study" element={<Study />}></Route>
               <Route path="/write" element={<Write />}></Route>
+              <Route path="/documents/:code" element={<Documents />}></Route>
             </Route>
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />}></Route>
