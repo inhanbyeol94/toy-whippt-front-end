@@ -155,7 +155,14 @@ export const IndexComponent = () => {
             >
                 <Select
                     size="small"
-                    options={[{ label: "자바스크립트", value: 1 }]}
+                    options={[{ label: "Java", value: 1 },
+                        { label: "JavaScript", value: 2 },
+                        { label: "Kotlin", value: 3 },
+                        { label: "React", value: 4 },
+                        { label: "Next.js", value: 5 },
+                        { label: "Node.js", value: 6 },
+                        { label: "Nest.js", value: 7 },
+                        { label: "Spring", value: 8 }]}
                     placeholder="언어"
                 />
             </S.Language>
@@ -167,7 +174,13 @@ export const IndexComponent = () => {
             >
                 <Select
                     size="small"
-                    options={[{ label: "라이브러리 질문", value: 1 }]}
+                    options={[{ label: "웹 개발", value: "WEB" },
+                        { label: "모바일 앱 개발", value: "APP" },
+                        { label: "데이터베이스와 데이터 관리", value: "DATA" },
+                        { label: "보안", value: "SECURITY" },
+                        { label: "개발 프로세스와 도구", value: "TOOL" },
+                        { label: "채용과 경력", value: "CAREER" },
+                        { label: "기타", value: "ETC" }]}
                     placeholder="질문 유형"
                 />
             </S.QuestionType>
