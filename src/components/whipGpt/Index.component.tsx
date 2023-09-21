@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Select } from "antd";
 import { IoIosCopy, IoIosShareAlt } from "react-icons/io";
 import { AiOutlineSend } from "react-icons/ai";
-import { S } from './index.style'
+import { S } from "./index.style";
 import { IWhipGPTData } from "../../interfaces/api/requests/whipGPT.interface";
+import { useGlobalStore } from "../../stores/global.store";
 
 export const IndexComponent = () => {
   /* Form */
   const [form] = Form.useForm<IWhipGPTData>();
+
+  /* Store */
+  const { setHeader, setSpin } = useGlobalStore();
+
+  useEffect(() => {
+    setHeader(true);
+    setSpin(false);
+  }, []);
 
   /* State */
   const [isSubmit, setIsSubmit] = useState(false);
@@ -60,91 +69,78 @@ export const IndexComponent = () => {
         <S.ChatContainer>
           <S.ChatBox>
             <S.WriteContent>
-            <p>
-              인한별 <S.CreationTime>18:49</S.CreationTime>
-            </p>
-            <S.CreatedContent>
-              Javascript에서 Express를 사용하려고하는데, app.post() 메소드 전에
-              미들웨어를 구축하고 싶어 어떻게 해야해?
-            </S.CreatedContent>
-            </S.WriteContent>
-
-          <S.AnswerContent>
-            <p>
-              에휴 그건 저도모르죠.. Express 공식사이트에 널려있는게 정보인데
-              그걸 왜 저한테 물어보세요?
-              <br />
-              정말 한심하지만, 공식사이트 링크정도는 공유드리죠.
-              <br />
-              <br />
-              https://expressjs.com/ko/
-            </p>
-            <S.ButtonBox>
-              <S.ShareButton icon={<IoIosShareAlt />}>
-                커뮤니티 공유
-              </S.ShareButton>
-              <S.CopyButton icon={<IoIosCopy />}>
-                복사
-              </S.CopyButton>
-            </S.ButtonBox>
-          </S.AnswerContent>
-          </S.ChatBox>
-          <S.ChatBox>
-            <S.WriteContent>
-            <p>
+              <p>
                 인한별 <S.CreationTime>18:49</S.CreationTime>
-            </p>
-            <S.CreatedContent>
-              어머! 어쩜그리 친절한거니? 혹시 정신병자 사이코패스야?
-            </S.CreatedContent>
+              </p>
+              <S.CreatedContent>
+                Javascript에서 Express를 사용하려고하는데, app.post() 메소드
+                전에 미들웨어를 구축하고 싶어 어떻게 해야해?
+              </S.CreatedContent>
             </S.WriteContent>
 
-
-          <S.AnswerContent>
-            <p>
-              그건 알려드릴 수 없습니다, 저의 구뇌구조는 국가 기밀 사항이에요.
-            </p>
-            <S.ButtonBox>
-              <S.ShareButton icon={<IoIosShareAlt />}>
-                커뮤니티 공유
-              </S.ShareButton>
-              <S.CopyButton icon={<IoIosCopy />}>
-                복사
-              </S.CopyButton>
-            </S.ButtonBox>
-          </S.AnswerContent>
+            <S.AnswerContent>
+              <p>
+                에휴 그건 저도모르죠.. Express 공식사이트에 널려있는게 정보인데
+                그걸 왜 저한테 물어보세요?
+                <br />
+                정말 한심하지만, 공식사이트 링크정도는 공유드리죠.
+                <br />
+                <br />
+                https://expressjs.com/ko/
+              </p>
+              <S.ButtonBox>
+                <S.ShareButton icon={<IoIosShareAlt />}>
+                  커뮤니티 공유
+                </S.ShareButton>
+                <S.CopyButton icon={<IoIosCopy />}>복사</S.CopyButton>
+              </S.ButtonBox>
+            </S.AnswerContent>
           </S.ChatBox>
           <S.ChatBox>
             <S.WriteContent>
-            <p>
-              인한별 <S.CreationTime>18:49</S.CreationTime>
-            </p>
-            <S.CreatedContent>
-              난 정식으로 너를 고소할거야.
-            </S.CreatedContent>
+              <p>
+                인한별 <S.CreationTime>18:49</S.CreationTime>
+              </p>
+              <S.CreatedContent>
+                어머! 어쩜그리 친절한거니? 혹시 정신병자 사이코패스야?
+              </S.CreatedContent>
             </S.WriteContent>
 
-          <S.AnswerContent>
-            <p>좋은 정보를 제공해주셔서 감사합니다.</p>
-            <S.ButtonBox>
-              <S.ShareButton icon={<IoIosShareAlt />}>
-                커뮤니티 공유
-              </S.ShareButton>
-              <S.CopyButton icon={<IoIosCopy />}>
-                복사
-              </S.CopyButton>
-            </S.ButtonBox>
-          </S.AnswerContent>
+            <S.AnswerContent>
+              <p>
+                그건 알려드릴 수 없습니다, 저의 구뇌구조는 국가 기밀 사항이에요.
+              </p>
+              <S.ButtonBox>
+                <S.ShareButton icon={<IoIosShareAlt />}>
+                  커뮤니티 공유
+                </S.ShareButton>
+                <S.CopyButton icon={<IoIosCopy />}>복사</S.CopyButton>
+              </S.ButtonBox>
+            </S.AnswerContent>
+          </S.ChatBox>
+          <S.ChatBox>
+            <S.WriteContent>
+              <p>
+                인한별 <S.CreationTime>18:49</S.CreationTime>
+              </p>
+              <S.CreatedContent>난 정식으로 너를 고소할거야.</S.CreatedContent>
+            </S.WriteContent>
+
+            <S.AnswerContent>
+              <p>좋은 정보를 제공해주셔서 감사합니다.</p>
+              <S.ButtonBox>
+                <S.ShareButton icon={<IoIosShareAlt />}>
+                  커뮤니티 공유
+                </S.ShareButton>
+                <S.CopyButton icon={<IoIosCopy />}>복사</S.CopyButton>
+              </S.ButtonBox>
+            </S.AnswerContent>
           </S.ChatBox>
         </S.ChatContainer>
         <S.Bar />
         <Form form={form} onFinish={submit}>
           <S.FormBox>
-            <S.Language
-              name="topic"
-              required={true}
-              rules={requiredRule.topic}
-            >
+            <S.Language name="topic" required={true} rules={requiredRule.topic}>
               <Select
                 size="middle"
                 options={[{ label: "자바스크립트", value: 1 }]}
