@@ -1,10 +1,8 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import cookie from "react-cookies";
 import { useAuthQueries } from "../../queries/auth.query";
 import LoaderComponent from "../../components/utils/Loader.component";
 import { useGlobalStore } from "../../stores/global.store";
-import { Simulate } from "react-dom/test-utils";
 import { Transition, TransitionGroup } from "react-transition-group";
 
 const TIMEOUT = 300;
@@ -37,6 +35,9 @@ export const PrivateRoute = () => {
 
   useEffect(() => {
     userInfoData ? setUserInfo(userInfoData) : resetUserInfo();
+  }, [userInfoData]);
+
+  useEffect(() => {
     refetch();
   }, [location.pathname]);
 
