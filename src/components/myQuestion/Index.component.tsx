@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
-    Button,
-    FloatButton,
-    Form,
-    List,
-    message, Select,
-    Tooltip,
+  Button,
+  FloatButton,
+  Form,
+  List,
+  message,
+  Select,
+  Tooltip,
 } from "antd";
 import { IoIosCopy, IoIosShareAlt } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -18,7 +19,7 @@ import { TbZoomReset } from "react-icons/tb";
 import { IQuestion } from "../../interfaces/api/results/question.interface";
 import { useQuestionStore } from "../../stores/question.store";
 import { useNavigate } from "react-router-dom";
-import { S } from './myQuestion.style'
+import { S } from "./myQuestion.style";
 
 const data: IQuestion[] = [
   {
@@ -49,9 +50,6 @@ export const IndexComponent = () => {
   /* Navigate */
   const navigate = useNavigate();
 
-  /* Antd Message */
-  const [messageApi, contextHolder] = message.useMessage();
-
   /* Form */
   const [form] = Form.useForm<ISearchData>();
 
@@ -60,7 +58,7 @@ export const IndexComponent = () => {
   const [modalData, setModalData] = useState<IQuestion>();
 
   /* Store */
-  const { setHeader, setSpin, setModal } = useGlobalStore();
+  const { setHeader, setSpin, setModal, sendMessage } = useGlobalStore();
   const { setQuestion } = useQuestionStore();
 
   useEffect(() => {
@@ -100,39 +98,38 @@ export const IndexComponent = () => {
     },
   ];
 
-    const requiredRule = {
-        topic: [
-            {
-                required: true,
-                message: "언어를 선택해주세요.",
-            },
-        ],
-        questionType: [
-            {
-                required: true,
-                message: "질문 유형을 선택해주세요.",
-            },
-        ],
-        title: [
-            {
-                required: true,
-                whitespace: true,
-                message: "질문을 입력해주세요.",
-            },
-        ],
-        library: [
-            {
-                required: true,
-                whitespace: true,
-                message: "라이브러리를 입력해주세요.",
-            },
-        ],
-    };
+  const requiredRule = {
+    topic: [
+      {
+        required: true,
+        message: "언어를 선택해주세요.",
+      },
+    ],
+    questionType: [
+      {
+        required: true,
+        message: "질문 유형을 선택해주세요.",
+      },
+    ],
+    title: [
+      {
+        required: true,
+        whitespace: true,
+        message: "질문을 입력해주세요.",
+      },
+    ],
+    library: [
+      {
+        required: true,
+        whitespace: true,
+        message: "라이브러리를 입력해주세요.",
+      },
+    ],
+  };
 
   /* Component */
   return (
     <S.Content>
-      {contextHolder}
       <Form form={form} onFinish={submit}>
         <Form.Item name="searchData" required={true} rules={formRules}>
           <S.SearchInput
@@ -140,50 +137,40 @@ export const IndexComponent = () => {
             placeholder={"검색할 이전 프롬포트를 입력해주세요."}
             disabled={isLoading}
             suffix={
-              <AiOutlineSearch cursor="pointer"
-                onClick={() => form.submit()}
-              />
+              <AiOutlineSearch cursor="pointer" onClick={() => form.submit()} />
             }
           />
         </Form.Item>
       </Form>
-        <S.SelectBox>
-            <S.Language
-                name="topic"
-                required={true}
-                rules={requiredRule.topic}
-            >
-                <Select
-                    size="small"
-                    options={[{ label: "자바스크립트", value: 1 }]}
-                    placeholder="언어"
-                />
-            </S.Language>
+      <S.SelectBox>
+        <S.Language name="topic" required={true} rules={requiredRule.topic}>
+          <Select
+            size="small"
+            options={[{ label: "자바스크립트", value: 1 }]}
+            placeholder="언어"
+          />
+        </S.Language>
 
-            <S.QuestionType
-                name="questionType"
-                required={true}
-                rules={requiredRule.questionType}
-            >
-                <Select
-                    size="small"
-                    options={[{ label: "라이브러리 질문", value: 1 }]}
-                    placeholder="질문 유형"
-                />
-            </S.QuestionType>
-            <S.Library
-                name="library"
-                required={true}
-                rules={requiredRule.library}
-            >
-                <S.LibraryInput
-                    size="small"
-                    placeholder="라이브러리를 입력해주세요."
-                />
-            </S.Library>
-        </S.SelectBox>
+        <S.QuestionType
+          name="questionType"
+          required={true}
+          rules={requiredRule.questionType}
+        >
+          <Select
+            size="small"
+            options={[{ label: "라이브러리 질문", value: 1 }]}
+            placeholder="질문 유형"
+          />
+        </S.QuestionType>
+        <S.Library name="library" required={true} rules={requiredRule.library}>
+          <S.LibraryInput
+            size="small"
+            placeholder="라이브러리를 입력해주세요."
+          />
+        </S.Library>
+      </S.SelectBox>
 
-        <S.ListContainer>
+      <S.ListContainer>
         <List
           itemLayout="vertical"
           size={"large"}
@@ -192,9 +179,7 @@ export const IndexComponent = () => {
           renderItem={(item) => (
             <List.Item>
               <S.Title>{item.title}</S.Title>
-              <S.CreationTime>
-                {item.createdAt.toLocaleString()}
-              </S.CreationTime>
+              <S.CreationTime>{item.createdAt.toLocaleString()}</S.CreationTime>
               <S.Answer>{item.answer}</S.Answer>
               <S.ButtonBox>
                 <Button
@@ -207,18 +192,10 @@ export const IndexComponent = () => {
                 <CopyToClipboard
                   text={`[질문]\n${item.title}\n\n[답변]\n${item.answer}`}
                   onCopy={() => {
-                    setIsLoading(true);
-                    messageApi.open({
-                      type: "success",
-                      content: "클립보드에 복사되었습니다.",
-                    });
-                    setIsLoading(false);
+                    sendMessage("success", "클립보드에 복사되었습니다.");
                   }}
                 >
-                  <Button
-                    icon={<IoIosCopy />}
-                    loading={isLoading}
-                  >
+                  <Button icon={<IoIosCopy />} loading={isLoading}>
                     복사
                   </Button>
                 </CopyToClipboard>
