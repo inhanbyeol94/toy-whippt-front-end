@@ -1,5 +1,5 @@
-import React from "react";
-import { Menu } from "antd";
+import React, { useEffect } from "react";
+import { Menu, message } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { S } from "./antLayout.style";
 import { useAuthQueries } from "../../queries/auth.query";
@@ -7,26 +7,34 @@ import { useGlobalStore } from "../../stores/global.store";
 
 const { Item, SubMenu } = Menu;
 const AntLayout = () => {
+  /* Message */
+  const [messageApi, contextHolder] = message.useMessage();
+
   /* Query */
-  const { logout, userInfoData } = useAuthQueries();
+  const { logout } = useAuthQueries();
 
   /* Store */
-  const { setSpin } = useGlobalStore();
+  const { setSpin, userInfo, msg } = useGlobalStore();
 
   /* Use Navigate */
   const navigate = useNavigate();
+
+  /* useEffect */
+  useEffect(() => {
+    if (msg[1]) return messageApi.open({ type: msg[0], content: msg[1] });
+  }, [msg]);
 
   /* Handle Function */
   const logoutHandler = () => {
     logout.mutate(undefined, {
       onSuccess: (data) => {
-        if (data.result == true) {
+        if (data.result === true) {
           setSpin(true);
           navigate("/login");
         }
       },
       onError: (error) => {
-        console.log(error.message);
+        console.error(error.message);
       },
     });
   };
@@ -88,11 +96,12 @@ const AntLayout = () => {
       <Menu theme="dark" selectable={false} mode="horizontal">
         <SubMenu
           key="profile"
-          title={<S.ProfileImg src={userInfoData?.profileImgUrl} />}
+          title={<S.ProfileImg src={userInfo?.profileImgUrl} />}
         >
           <Menu.Item key="logout" children="로그아웃" onClick={logoutHandler} />
         </SubMenu>
       </Menu>
+      {contextHolder}
     </S.Header>
   );
 };
