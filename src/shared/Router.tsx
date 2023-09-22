@@ -14,6 +14,7 @@ import { GuestRoute } from "./util/GuestRoute";
 import { useGlobalStore } from "../stores/global.store";
 import { Transition } from "react-transition-group";
 import {Documents} from "../components/community/Documents";
+import {Detail} from "../components/study/Detail";
 
 const Router = () => {
   const { header, spin } = useGlobalStore();
@@ -39,6 +40,7 @@ const Router = () => {
               <Route path="/study" element={<Study />}></Route>
               <Route path="/write" element={<Write />}></Route>
               <Route path="/documents/:code" element={<Documents />}></Route>
+              <Route path="/detail" element={<Detail />}></Route>
             </Route>
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />}></Route>

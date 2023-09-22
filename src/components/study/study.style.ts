@@ -9,28 +9,17 @@ export const S = {
       margin: 16px 0 0 0;
     `,
     AddRoomButton: styled(Button)`
-      position: relative;
       float: right;
+      position: relative;
+      background-color: lightgrey;
     `,
     StudyContainer: styled.div`
       display: flex;
       flex-direction: column;
-      overflow: auto;
       height: 84.7vh;
       padding: 30px 15% 0 15%;
       border-radius: 10px;
       background-color: var(--sub-color);
-      
-      // 스크롤바 전체 영역
-      &::-webkit-scrollbar {
-        width: 7px;
-      }
-      // 스크롤바 막대
-      &::-webkit-scrollbar-thumb {
-        background-color: #F0F0F0;
-        border: 1px solid #F0F0F0;
-        border-radius: 12px;
-      }
     `,
     SearchInput: styled(Input)`
       padding-left: 20px;
