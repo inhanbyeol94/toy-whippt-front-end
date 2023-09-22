@@ -38,7 +38,9 @@ export const WriteComponent = () => {
 
   useEffect(() => {
     if (question?.title) {
-      setValue(`## GPT 응답 결과
+      setValue(` 
+## GPT 응답 결과
+    ${question.topic} / ${question.questionType} / ${question.library}
 
 > **질문.**
 > *${question?.title}*
