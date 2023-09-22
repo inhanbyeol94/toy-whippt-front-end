@@ -12,6 +12,9 @@ import { Write } from "../pages/Write";
 import { PrivateRoute } from "./util/PrivateRoute";
 import { GuestRoute } from "./util/GuestRoute";
 import { useGlobalStore } from "../stores/global.store";
+import { Transition } from "react-transition-group";
+import {Documents} from "../components/community/Documents";
+import {Detail} from "../components/study/Detail";
 import { Documents } from "../components/community/Documents";
 
 const Router = () => {
@@ -41,6 +44,7 @@ const Router = () => {
                 path="/community/documents/:document"
                 element={<Documents />}
               ></Route>
+              <Route path="/detail" element={<Detail />}></Route>
             </Route>
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />}></Route>

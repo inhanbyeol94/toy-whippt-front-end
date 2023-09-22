@@ -4,6 +4,33 @@ import styled from "styled-components";
 const { Content } = Layout;
 
 export const S = {
+    SearchInput: styled(Input)`
+      padding-left: 20px;
+      margin-right: 10px;
+      border-radius: 20px;
+    `,
+    SelectBox: styled.div`
+      display: flex;
+    `,
+    Language: styled(Form.Item)`
+      width: 120px;
+      margin-right: 10px;
+    `,
+    QuestionType: styled(Form.Item)`
+      width: 185px;
+      margin-right: 10px;
+    `,
+    Library: styled(Form.Item)`
+      width: 30%;
+    `,
+    LibraryInput: styled(Input)`
+      border-radius: 5px;
+    `,
+    ListContainer: styled.div`
+      height: 68vh;
+      margin-top: 50px;
+      overflow: auto;
+      
   Content: styled(Content)`
     padding: 0 50px;
     margin: 16px 0 0 0;
