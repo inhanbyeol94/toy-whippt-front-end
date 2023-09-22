@@ -10,7 +10,7 @@ export const ModalComponent = ({ children, footer, modalTitle }: IProp) => {
       centered
       open={modal}
       onCancel={() => setModal(false)}
-      width={1000}
+      width={700}
       footer={footer || []}
     >
       {children}
