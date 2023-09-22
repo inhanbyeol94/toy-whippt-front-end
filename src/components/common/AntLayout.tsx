@@ -98,6 +98,7 @@ const AntLayout = () => {
           key="profile"
           title={<S.ProfileImg src={userInfo?.profileImgUrl} />}
         >
+          <Menu.Item key="chat" children="쪽지함" />
           <Menu.Item key="logout" children="로그아웃" onClick={logoutHandler} />
         </SubMenu>
       </Menu>
@@ -107,7 +108,7 @@ const AntLayout = () => {
 };
 
 const AntFooter = () => {
-  return <S.Footer>항해커톤 프로젝트 ©2023 Created by 채찍피티</S.Footer>;
+  return <S.Footer>항해커톤 프로젝트 ©2023 Created by 항해피티</S.Footer>;
 };
 
 export { AntLayout, AntFooter };
