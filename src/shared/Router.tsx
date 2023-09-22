@@ -12,10 +12,8 @@ import { Write } from "../pages/Write";
 import { PrivateRoute } from "./util/PrivateRoute";
 import { GuestRoute } from "./util/GuestRoute";
 import { useGlobalStore } from "../stores/global.store";
-import { Transition } from "react-transition-group";
-import {Documents} from "../components/community/Documents";
-import {Detail} from "../components/study/Detail";
 import { Documents } from "../components/community/Documents";
+import { Detail } from "../components/study/Detail";
 
 const Router = () => {
   const { header, spin } = useGlobalStore();
