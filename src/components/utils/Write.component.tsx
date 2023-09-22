@@ -2,14 +2,40 @@ import { Button, Form, Input } from "antd";
 import { useQuestionStore } from "../../stores/question.store";
 import MDEditor from "@uiw/react-md-editor";
 import { useEffect, useState } from "react";
+import { usePostQueries } from "../../queries/post.query";
+import { useNavigate } from "react-router-dom";
+import { useGlobalStore } from "../../stores/global.store";
+import { useEditPostStore } from "../../stores/editPost.store";
 
 export const WriteComponent = () => {
   const { question, resetQuestion } = useQuestionStore();
+  const navagate = useNavigate();
 
-  /* useState */
+  /* Store */
+  const { setHeader, sendMessage } = useGlobalStore();
+  const { postData, resetPostData } = useEditPostStore();
+
+  /* Query */
+  const { newPost, editPostMutation } = usePostQueries();
+
+  /* State */
   const [value, setValue] = useState<string | undefined>("");
+  const [editSend, setEditSend] = useState<boolean>(false);
 
   /* useEffect */
+
+  useEffect(() => {
+    if (postData.postId) {
+      form.setFieldValue("title", postData.title);
+      setValue(postData.content);
+      setEditSend(true);
+    }
+  }, [postData]);
+
+  useEffect(() => {
+    setHeader(true);
+  }, []);
+
   useEffect(() => {
     if (question?.title) {
       setValue(`## GPT 응답 결과
@@ -31,7 +57,41 @@ export const WriteComponent = () => {
 
   /* Function */
   const submit = ({ title }: { title: string }) => {
-    if (!value) return alert("본문을 입력해주세요.");
+    if (!value) return sendMessage("error", "본문을 입력해주세요.");
+
+    if (editSend) {
+      editPostMutation.mutate(
+        { title, content: value, postId: postData.postId },
+        {
+          onSuccess: () => {
+            resetPostData();
+            sendMessage("success", "게시글이 정상 수정되었습니다.");
+            setEditSend(false);
+            navagate(`/community/documents/${postData.postId}`);
+          },
+          onError: (error) => {
+            if (error?.status) return sendMessage("error", error?.message);
+            console.error(error);
+            sendMessage("error", "오류가 발생했습니다.");
+          },
+        },
+      );
+    } else {
+      newPost.mutate(
+        { title, content: value },
+        {
+          onSuccess: (data) => {
+            sendMessage("success", "정상 등록되었습니다.");
+            navagate(`/community/documents/${data.id}`);
+          },
+          onError: (error) => {
+            if (error?.status) return sendMessage("error", error?.message);
+            console.error(error);
+            sendMessage("error", "오류가 발생했습니다.");
+          },
+        },
+      );
+    }
   };
 
   return (
@@ -65,7 +125,7 @@ export const WriteComponent = () => {
         </Form.Item>
         <Form.Item style={{ textAlign: "right" }}>
           <Button type="primary" size="large" htmlType="submit">
-            작성
+            등록
           </Button>
         </Form.Item>
       </Form>

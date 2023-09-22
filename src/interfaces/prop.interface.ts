@@ -1,4 +1,5 @@
-import {ICommunity, IQuestion} from "./api/results/question.interface";
+import { ICommunity, IQuestion } from "./api/results/question.interface";
+import { IComment } from "./api/results/comment.interface";
 
 export interface IProp {
   bgColor?: string;
@@ -8,4 +9,9 @@ export interface IProp {
   questionData?: IQuestion;
   modalTitle?: string;
   communityData?: ICommunity;
+  editCommentData?: {
+    commentId: string;
+    documentId: string;
+    comment: string;
+  };
 }

@@ -25,4 +25,6 @@ export const useGlobalStore = create<IGlobalStore>((set) => ({
     })),
   spin: true,
   setSpin: (spin: boolean) => set((state) => ({ spin })),
+  msg: ["info", ""],
+  sendMessage: (type, message) => set((state) => ({ msg: [type, message] })),
 }));
