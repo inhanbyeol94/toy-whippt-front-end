@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { authInfo, authLogout, authRefresh } from "../api/auth.api";
 import { IResult } from "../interfaces/api/results/result.interface";
 import { AxiosError } from "axios";
@@ -16,15 +16,20 @@ import {
 } from "../api/post.api";
 import { ICreatePost } from "../interfaces/api/requests/createPost.interface";
 import { IResultCreatePost } from "../interfaces/api/results/createPost.interface";
-import { IDocument } from "../interfaces/api/requests/document.interface";
+import {
+  IDocument,
+  IPost,
+  IResultPosts,
+} from "../interfaces/api/requests/document.interface";
 import { ICreateComment } from "../interfaces/api/requests/createComment.interface";
 import { IResultCreateComment } from "../interfaces/api/results/createComment.interface";
 import { IDeleteComment } from "../interfaces/api/requests/deleteComment.interface";
 import { IEditComment } from "../interfaces/api/requests/editComment.interface";
 import { IDeletePost } from "../interfaces/api/requests/deletePost.interface";
 import { IEditPost } from "../interfaces/api/requests/editPost.interface";
+import { getNextPageParam } from "react-query/types/core/infiniteQueryBehavior";
 
-export const usePostQueries = (document?: string) => {
+export const usePostQueries = (document?: string, keyword?: string) => {
   /* Post */
   const newPost = useMutation((data: ICreatePost) => createPost(data), {
     onSuccess: (result: IResultCreatePost) => {
@@ -61,7 +66,24 @@ export const usePostQueries = (document?: string) => {
     },
   );
 
-  const { data: getPostsData } = useQuery(["getPosts"], () => getPosts());
+  const {
+    data: getPostsData,
+    hasNextPage,
+    fetchNextPage,
+    isLoading: postsIsLoading,
+    isFetching: postsIsFetching,
+  } = useInfiniteQuery<[IPost[], number], Error, [IPost[], number]>(
+    ["getPosts"],
+    ({ pageParam = 1 }) => getPosts(pageParam, keyword),
+    {
+      refetchOnWindowFocus: false,
+      getNextPageParam: (lastPage, allPages) => {
+        const maxPage = Math.ceil(lastPage[1] / 10);
+        const nextPage = allPages.length + 1;
+        return nextPage <= maxPage ? nextPage : null;
+      },
+    },
+  );
 
   /* Comment */
 
@@ -122,5 +144,9 @@ export const usePostQueries = (document?: string) => {
     editCommentMutation,
     delPostMutation,
     editPostMutation,
+    hasNextPage,
+    fetchNextPage,
+    postsIsLoading,
+    postsIsFetching,
   };
 };

@@ -3,7 +3,11 @@ import { IAuthInfo } from "../interfaces/api/results/authinfo.interface";
 import { IResult } from "../interfaces/api/results/result.interface";
 import { ICreatePost } from "../interfaces/api/requests/createPost.interface";
 import { IResultCreatePost } from "../interfaces/api/results/createPost.interface";
-import { IDocument } from "../interfaces/api/requests/document.interface";
+import {
+  IDocument,
+  IPost,
+  IResultPosts,
+} from "../interfaces/api/requests/document.interface";
 import { ICreateComment } from "../interfaces/api/requests/createComment.interface";
 import { IResultCreateComment } from "../interfaces/api/results/createComment.interface";
 import { IComment } from "../interfaces/api/results/comment.interface";
@@ -51,8 +55,14 @@ export const createPost = async (
   return res.data;
 };
 
-export const getPosts = async (): Promise<IDocument[]> => {
-  const res: AxiosResponse<IDocument[]> = await server.get(`/posts`);
+export const getPosts = async (
+  pageParam: number,
+  keyword?: string,
+): Promise<[IPost[], number]> => {
+  const res: AxiosResponse<[IPost[], number]> = await server.get(
+    `/posts?keyword=${keyword || ""}&page=${pageParam}`,
+  );
+
   return res.data;
 };
 
