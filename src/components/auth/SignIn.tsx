@@ -9,7 +9,9 @@ export const SignIn = () => {
 
   useEffect(() => {
     setHeader(false);
-    setSpin(false);
+    setTimeout(() => {
+      setSpin(false);
+    }, 1000);
   }, []);
 
   /* Function */
