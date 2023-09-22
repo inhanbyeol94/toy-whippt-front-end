@@ -1,8 +1,8 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout, Spin } from "antd";
 import GlobalStyles from "../GlobalStyles";
-import { AntLayout, AntFooter } from "../components/common/AntLayout";
+import { AntFooter, AntLayout } from "../components/common/AntLayout";
 import { WhipGPT } from "../pages/WhipGPT";
 import { MyQuestions } from "../pages/MyQuestions";
 import { Study } from "../pages/Study";
@@ -12,8 +12,7 @@ import { Write } from "../pages/Write";
 import { PrivateRoute } from "./util/PrivateRoute";
 import { GuestRoute } from "./util/GuestRoute";
 import { useGlobalStore } from "../stores/global.store";
-import { Transition } from "react-transition-group";
-import {Documents} from "../components/community/Documents";
+import { Documents } from "../components/community/Documents";
 
 const Router = () => {
   const { header, spin } = useGlobalStore();
@@ -38,7 +37,10 @@ const Router = () => {
               <Route path="/community" element={<Community />}></Route>
               <Route path="/study" element={<Study />}></Route>
               <Route path="/write" element={<Write />}></Route>
-              <Route path="/documents/:code" element={<Documents />}></Route>
+              <Route
+                path="/community/documents/:document"
+                element={<Documents />}
+              ></Route>
             </Route>
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />}></Route>
