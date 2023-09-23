@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { S } from './study.style'
-import {Button, Form, Input, List, message, Select} from "antd";
-import {AiOutlineSearch} from "react-icons/ai";
+import { Form, Input, message } from "antd";
+import { AiOutlineSearch } from "react-icons/ai";
 import { ISearchData } from "../../interfaces/api/requests/searchData.interface";
-import {BiSolidMessageRounded} from "react-icons/bi";
-import {useGlobalStore} from "../../stores/global.store";
-import {StudyModalComponent} from "./Study.modal.component";
-import {ModalComponent} from "../utils/Modal.component";
+import { BiSolidMessageRounded } from "react-icons/bi";
+import { useGlobalStore } from "../../stores/global.store";
+import { AddStudyRoomModalComponent } from "./AddStudyRoom.modal.component";
 
 const { Search } = Input;
 
@@ -41,9 +40,7 @@ export const IndexComponent = () => {
     };
 
     const showModal = () => {
-        setIsLoading(true);
         setModal(true);
-        setIsLoading(false);
     };
 
     const formRules = [
@@ -67,8 +64,7 @@ export const IndexComponent = () => {
                                 disabled={isLoading}
                                 suffix={
                                     <AiOutlineSearch cursor="pointer"
-                                                     onClick={() => form.submit()}
-                                    />
+                                     onClick={() => form.submit()} />
                                 }
                             />
                         </Form.Item>
@@ -85,10 +81,10 @@ export const IndexComponent = () => {
                             <S.Title>Node.js 취업준비생 모아요</S.Title>
                             <span>방장이름</span>
                             <span>0/10</span>
-                            <S.ButtonBox>
-                                <Button loading={isLoading}>Node.js</Button>
-                                <Button loading={isLoading}>프로그래밍 언어와 기술</Button>
-                            </S.ButtonBox>
+                            <S.TagBox>
+                                <S.Tags>Node.js</S.Tags>
+                                <S.Tags>프로그래밍 언어와 기술</S.Tags>
+                            </S.TagBox>
                             </S.RoomContents>
                         </S.RoomBox>
                         <S.RoomBox>
@@ -96,10 +92,10 @@ export const IndexComponent = () => {
                                 <S.Title>Node.js 취업준비생 모아요</S.Title>
                                 <span>방장이름</span>
                                 <span>0/10</span>
-                                <S.ButtonBox>
-                                    <Button loading={isLoading}>Node.js</Button>
-                                    <Button loading={isLoading}>프로그래밍 언어와 기술</Button>
-                                </S.ButtonBox>
+                                <S.TagBox>
+                                    <S.Tags>Node.js</S.Tags>
+                                    <S.Tags>프로그래밍 언어와 기술</S.Tags>
+                                </S.TagBox>
                             </S.RoomContents>
                         </S.RoomBox>
                         <S.RoomBox>
@@ -107,10 +103,10 @@ export const IndexComponent = () => {
                                 <S.Title>Node.js 취업준비생 모아요</S.Title>
                                 <span>방장이름</span>
                                 <span>0/10</span>
-                                <S.ButtonBox>
-                                    <Button loading={isLoading}>Node.js</Button>
-                                    <Button loading={isLoading}>프로그래밍 언어와 기술</Button>
-                                </S.ButtonBox>
+                                <S.TagBox>
+                                    <S.Tags>Node.js</S.Tags>
+                                    <S.Tags>프로그래밍 언어와 기술</S.Tags>
+                                </S.TagBox>
                             </S.RoomContents>
                         </S.RoomBox>
                         <S.RoomBox>
@@ -118,14 +114,37 @@ export const IndexComponent = () => {
                                 <S.Title>Node.js 취업준비생 모아요</S.Title>
                                 <span>방장이름</span>
                                 <span>0/10</span>
-                                <S.ButtonBox>
-                                    <Button loading={isLoading}>Node.js</Button>
-                                    <Button loading={isLoading}>프로그래밍 언어와 기술</Button>
-                                </S.ButtonBox>
+                                <S.TagBox>
+                                    <S.Tags>Node.js</S.Tags>
+                                    <S.Tags>프로그래밍 언어와 기술</S.Tags>
+                                </S.TagBox>
+                            </S.RoomContents>
+                        </S.RoomBox>
+                        <S.RoomBox>
+                            <S.RoomContents>
+                                <S.Title>Node.js 취업준비생 모아요</S.Title>
+                                <span>방장이름</span>
+                                <span>0/10</span>
+                                <S.TagBox>
+                                    <S.Tags>Node.js</S.Tags>
+                                    <S.Tags>프로그래밍 언어와 기술</S.Tags>
+                                </S.TagBox>
+                            </S.RoomContents>
+                        </S.RoomBox>
+                        <S.RoomBox>
+                            <S.RoomContents>
+                                <S.Title>Node.js 취업준비생 모아요</S.Title>
+                                <span>방장이름</span>
+                                <span>0/10</span>
+                                <S.TagBox>
+                                    <S.Tags>Node.js</S.Tags>
+                                    <S.Tags>프로그래밍 언어와 기술</S.Tags>
+                                </S.TagBox>
                             </S.RoomContents>
                         </S.RoomBox>
                     </S.ContentsContainer>
                 </S.StudyContainer>
+                <AddStudyRoomModalComponent />
             </S.Content>
         </>
     )
