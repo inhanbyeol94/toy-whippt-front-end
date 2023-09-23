@@ -21,7 +21,7 @@ export const SignIn = () => {
       <S.Content>
         <S.Container>
           <S.LoginBox>
-            <p>채찍피티는 카카오 로그인 후 이용이 가능합니다.</p>
+            <p>항해피티는 카카오 로그인 후 이용이 가능합니다.</p>
             <Link to={`${process.env.REACT_APP_SERVER}/auth/login/kakao`}>
               <img src="https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_wide.png" />
             </Link>
