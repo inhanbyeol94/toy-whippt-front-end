@@ -1,4 +1,4 @@
-import {Layout, Button} from "antd";
+import {Layout} from "antd";
 import styled from "styled-components";
 
 const { Content } = Layout;
@@ -19,6 +19,9 @@ export const S = {
     Title: styled.span`
       font-size: 20px;
       font-weight: bold;
+      line-height: 3;
+      margin-bottom: 20px;
+      border-bottom: 1px solid lightgrey;
     `,
     ContentsContainer: styled.div`
       height: 68vh;
@@ -36,8 +39,9 @@ export const S = {
       }
     `,
     Contents: styled.div`
-      min-height: 50vh;
+      min-height: 43vh;
       line-height: 1.5;
+      margin-bottom: 15px;
       word-break:break-all;
     `,
     ButtonBox: styled.div`
@@ -65,6 +69,7 @@ export const S = {
     PersonnelBox: styled.div`
       gap: 20px;
       width: 15%;
+      min-width: 160px;
       display: flex;
       margin-top: 15px;
       border-radius: 10px;
