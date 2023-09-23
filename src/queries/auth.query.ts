@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { authInfo, authLogout, authRefresh } from "../api/auth.api";
+import { authInfo, authLogout } from "../api/auth.api";
 import { IResult } from "../interfaces/api/results/result.interface";
 import { AxiosError } from "axios";
-import { queryClient } from "../App";
+import { IApiResult } from "../interfaces/api/results/apiResult.interface";
 
 export const useAuthQueries = () => {
   const {
@@ -20,7 +20,7 @@ export const useAuthQueries = () => {
     onSuccess: (result: IResult) => {
       return result;
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<IApiResult>) => {
       return error;
     },
   });

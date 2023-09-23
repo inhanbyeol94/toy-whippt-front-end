@@ -1,12 +1,9 @@
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
-import { authInfo, authLogout, authRefresh } from "../api/auth.api";
-import { IResult } from "../interfaces/api/results/result.interface";
-import { AxiosError } from "axios";
 import { createStudy, getStudies, getStudy } from "../api/study.api";
 import { ICreateStudy } from "../interfaces/api/requests/createStudy.interface";
-import { IPost } from "../interfaces/api/requests/document.interface";
-import { getPosts } from "../api/post.api";
 import { IStudy } from "../interfaces/api/results/study.interface";
+import { AxiosError } from "axios/index";
+import { IApiResult } from "../interfaces/api/results/apiResult.interface";
 
 export const useStudyQueries = (keyword?: string, studyId?: string) => {
   const createStudyMutation = useMutation(
@@ -15,7 +12,7 @@ export const useStudyQueries = (keyword?: string, studyId?: string) => {
       onSuccess: () => {
         //
       },
-      onError: (error: AxiosError) => {
+      onError: (error: AxiosError<IApiResult>) => {
         return error;
       },
     },

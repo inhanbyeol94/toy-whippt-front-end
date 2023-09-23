@@ -62,7 +62,8 @@ export const Documents = () => {
           sendMessage("success", "정상 삭제되었습니다.");
         },
         onError: (error) => {
-          if (error?.status) return sendMessage("error", error?.message);
+          if (error.response?.status)
+            return sendMessage("error", error.response.data.message);
           console.error(error);
           sendMessage("error", "오류가 발생했습니다.");
         },
@@ -79,7 +80,8 @@ export const Documents = () => {
           navigate("/community");
         },
         onError: (error) => {
-          if (error?.status) return sendMessage("error", error?.message);
+          if (error.response?.status)
+            return sendMessage("error", error.response.data.message);
           console.error(error);
           sendMessage("error", "오류가 발생했습니다.");
         },
@@ -107,7 +109,8 @@ export const Documents = () => {
           setComment("");
         },
         onError: (error) => {
-          if (error?.status) return sendMessage("error", error?.message);
+          if (error.response?.status)
+            return sendMessage("error", error.response.data.message);
           console.error(error);
           sendMessage("error", "오류가 발생했습니다.");
           setIsLoading(false);

@@ -108,7 +108,8 @@ export const IndexComponent = () => {
         sendMessage("success", "질문이 정상 생성되었습니다.");
       },
       onError: (error) => {
-        if (error?.status) return sendMessage("error", error.message);
+        if (error.response?.status)
+          return sendMessage("error", error.response.data.message);
         console.error(error);
         sendMessage("error", "오류가 발생하였습니다.");
       },
@@ -122,7 +123,8 @@ export const IndexComponent = () => {
         sendMessage("success", "질문이 정상 삭제되었습니다.");
       },
       onError: (error) => {
-        if (error?.status) return sendMessage("error", error.message);
+        if (error.response?.status)
+          return sendMessage("error", error.response.data.message);
         console.error(error);
         sendMessage("error", "오류가 발생하였습니다.");
       },

@@ -1,5 +1,4 @@
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { queryClient } from "../App";
 import {
   continueQuestion,
@@ -10,11 +9,9 @@ import {
   findRecentQuestionList,
 } from "../api/question.api";
 import { IContinueQuestion } from "../interfaces/api/requests/continueQuestion.interface";
-import { IFindOneQuestion } from "../interfaces/api/requests/findOneQuestion.interface";
-import {
-  IQuestion,
-  IQuestionDetail,
-} from "../interfaces/api/results/question.interface";
+import { IQuestionDetail } from "../interfaces/api/results/question.interface";
+import { AxiosError } from "axios/index";
+import { IApiResult } from "../interfaces/api/results/apiResult.interface";
 
 export const useQuestionQueries = (questionId?: string, keyword?: string) => {
   const createQuestionRoomMutation = useMutation(() => createQuestionRoom(), {
@@ -23,7 +20,7 @@ export const useQuestionQueries = (questionId?: string, keyword?: string) => {
       queryClient.invalidateQueries(["findRecentQuestionList"]);
       return data;
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<IApiResult>) => {
       return error;
     },
   });
@@ -48,7 +45,7 @@ export const useQuestionQueries = (questionId?: string, keyword?: string) => {
         queryClient.invalidateQueries(["questionData", questionId]);
         return queryClient.invalidateQueries(["findRecentQuestionList"]);
       },
-      onError: (error: AxiosError) => {
+      onError: (error: AxiosError<IApiResult>) => {
         return error;
       },
     },
@@ -61,7 +58,7 @@ export const useQuestionQueries = (questionId?: string, keyword?: string) => {
         queryClient.invalidateQueries(["questionData", questionId]);
         return queryClient.invalidateQueries(["findRecentQuestionList"]);
       },
-      onError: (error: AxiosError) => {
+      onError: (error: AxiosError<IApiResult>) => {
         return error;
       },
     },

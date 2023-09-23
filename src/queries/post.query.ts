@@ -1,7 +1,5 @@
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
-import { authInfo, authLogout, authRefresh } from "../api/auth.api";
 import { IResult } from "../interfaces/api/results/result.interface";
-import { AxiosError } from "axios";
 import { queryClient } from "../App";
 import {
   createComment,
@@ -16,18 +14,15 @@ import {
 } from "../api/post.api";
 import { ICreatePost } from "../interfaces/api/requests/createPost.interface";
 import { IResultCreatePost } from "../interfaces/api/results/createPost.interface";
-import {
-  IDocument,
-  IPost,
-  IResultPosts,
-} from "../interfaces/api/requests/document.interface";
+import { IPost } from "../interfaces/api/requests/document.interface";
 import { ICreateComment } from "../interfaces/api/requests/createComment.interface";
 import { IResultCreateComment } from "../interfaces/api/results/createComment.interface";
 import { IDeleteComment } from "../interfaces/api/requests/deleteComment.interface";
 import { IEditComment } from "../interfaces/api/requests/editComment.interface";
 import { IDeletePost } from "../interfaces/api/requests/deletePost.interface";
 import { IEditPost } from "../interfaces/api/requests/editPost.interface";
-import { getNextPageParam } from "react-query/types/core/infiniteQueryBehavior";
+import { AxiosError } from "axios/index";
+import { IApiResult } from "../interfaces/api/results/apiResult.interface";
 
 export const usePostQueries = (document?: string, keyword?: string) => {
   /* Post */
@@ -35,7 +30,7 @@ export const usePostQueries = (document?: string, keyword?: string) => {
     onSuccess: (result: IResultCreatePost) => {
       return result;
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<IApiResult>) => {
       return error;
     },
   });
@@ -44,7 +39,7 @@ export const usePostQueries = (document?: string, keyword?: string) => {
     onSuccess: (result: IResult) => {
       return result;
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<IApiResult>) => {
       return error;
     },
   });
@@ -53,7 +48,7 @@ export const usePostQueries = (document?: string, keyword?: string) => {
     onSuccess: (result: IResult) => {
       return result;
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<IApiResult>) => {
       return error;
     },
   });
@@ -106,7 +101,7 @@ export const usePostQueries = (document?: string, keyword?: string) => {
         queryClient.invalidateQueries(["comments"]);
         return result;
       },
-      onError: (error: AxiosError) => {
+      onError: (error: AxiosError<IApiResult>) => {
         return error;
       },
     },
@@ -119,7 +114,7 @@ export const usePostQueries = (document?: string, keyword?: string) => {
         queryClient.invalidateQueries(["comments"]);
         return result;
       },
-      onError: (error: AxiosError) => {
+      onError: (error: AxiosError<IApiResult>) => {
         return error;
       },
     },
@@ -132,7 +127,7 @@ export const usePostQueries = (document?: string, keyword?: string) => {
         queryClient.invalidateQueries(["comments"]);
         return result;
       },
-      onError: (error: AxiosError) => {
+      onError: (error: AxiosError<IApiResult>) => {
         return error;
       },
     },

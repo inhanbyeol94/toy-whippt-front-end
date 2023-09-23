@@ -47,7 +47,8 @@ export const CommentEditModalComponent = ({ editCommentData }: IProp) => {
           setModal(false);
         },
         onError: (error) => {
-          if (error?.status) return sendMessage("error", error?.message);
+          if (error.response?.status)
+            return sendMessage("error", error.response.data.message);
           console.error(error);
           sendMessage("error", "오류가 발생했습니다.");
         },
