@@ -52,7 +52,13 @@ const AntLayout = () => {
         items={[
           {
             key: "logo",
-            label: "logo",
+            label: (
+              <img
+                src="/logo.png"
+                style={{ width: 160, objectFit: "cover" }}
+                alt="logo"
+              />
+            ),
           },
         ]}
       />
