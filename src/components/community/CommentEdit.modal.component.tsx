@@ -5,6 +5,7 @@ import TextArea from "antd/es/input/TextArea";
 import { Button } from "antd";
 import { useGlobalStore } from "../../stores/global.store";
 import { usePostQueries } from "../../queries/post.query";
+import styled from "styled-components";
 
 export const CommentEditModalComponent = ({ editCommentData }: IProp) => {
   /* Query */
@@ -56,17 +57,26 @@ export const CommentEditModalComponent = ({ editCommentData }: IProp) => {
   };
   return (
     <ModalComponent modalTitle={`댓글 수정`}>
-      <TextArea
+      <S.TextArea
         value={editComment}
         onChange={editCommentHandle}
-        style={{ marginBottom: 15 }}
         maxLength={254}
       />
-      <div style={{ textAlign: "right" }}>
-        <Button style={{ textAlign: "right" }} onClick={reqeustEditComment}>
+        <S.EditButton onClick={reqeustEditComment}>
           수정
-        </Button>
-      </div>
+        </S.EditButton>
     </ModalComponent>
   );
 };
+
+  const S = {
+    TextArea: styled(TextArea)`
+      margin: 10px 0 35px 0;
+    `,
+    EditButton: styled(Button)`
+      bottom: 0;
+      right: 8px;
+      margin: 15px;
+      position: absolute;
+    `,
+  }
