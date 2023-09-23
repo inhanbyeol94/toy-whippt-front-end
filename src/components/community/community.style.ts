@@ -71,4 +71,13 @@ export const S = {
     margin-top: 15px;
     color: gray;
   `,
+  Img: styled.img`
+    width: 22px;
+    height: 22px;
+    margin-right: 5px;
+    border-radius: 50%;
+  `,
+  Ref: styled.div`
+    color: white;
+  `,
 };

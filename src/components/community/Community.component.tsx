@@ -100,13 +100,7 @@ export const CommunityComp = () => {
                           .replace("## 본문", "")}
                       </S.Contents>
                       <S.Info>
-                        <img
-                          style={{
-                            width: 22,
-                            height: 22,
-                            borderRadius: "50%",
-                            marginRight: 5,
-                          }}
+                        <S.Img
                           src={item.user.profileImgUrl}
                         />
                         {item.user.name} |{" "}
@@ -117,9 +111,9 @@ export const CommunityComp = () => {
                 </React.Fragment>
               )}
             />
-            <div ref={ref} style={{ color: "white" }}>
+            <S.Ref ref={ref}>
               .
-            </div>
+            </S.Ref>
           </S.ListContainer>
         </S.CommunityContainer>
       </S.Content>
