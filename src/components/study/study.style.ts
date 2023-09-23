@@ -11,6 +11,7 @@ export const S = {
     AddRoomButton: styled(Button)`
       float: right;
       position: relative;
+      font-weight: bold;
       background-color: lightgrey;
     `,
     StudyContainer: styled.div`
@@ -33,9 +34,9 @@ export const S = {
       display: flex;
       overflow: auto;
       flex-wrap: wrap;
+      margin: 30px auto;
       align-items: center;
       justify-content: center;
-      margin: 30px 0 30px 0;
 
       // 스크롤바 전체 영역
       &::-webkit-scrollbar {
@@ -49,9 +50,9 @@ export const S = {
       }
     `,
     RoomBox: styled.div`
-      width: 35%;
-      height: 270px;
-      padding: 50px;
+      width: 40%;
+      height: 274px;
+      padding: 40px;
       display: table;
       position: relative;
       border-radius: 10px;
@@ -64,13 +65,21 @@ export const S = {
       justify-content: center;
     `,
     Title: styled.span`
-    font-size: 18px;
-    font-weight: bold
+      font-size: 18px;
+      font-weight: bold;
+      word-break: break-all;
     `,
-    ButtonBox: styled.div`
+    TagBox: styled.div`
       gap: 10px;
       bottom: 30px;
       display: flex;
       position: absolute;
+    `,
+    Tags: styled.span`
+      font-size: 12px;
+      padding: 10px 15px;
+      border-radius: 10px;
+      word-break: break-all;
+      background-color: white;
     `,
 }
