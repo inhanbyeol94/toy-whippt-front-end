@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === "production") {
   console.warn = function no_console() {};
   console.error = function no_console() {};
 }
-//
+
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
