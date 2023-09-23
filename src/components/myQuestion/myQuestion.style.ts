@@ -65,4 +65,7 @@ export const S = {
       display: flex;
       margin-top: 20px;
     `,
+    Ref: styled.div`
+      color: white;
+    `,
 }

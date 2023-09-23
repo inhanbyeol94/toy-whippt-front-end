@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  FloatButton,
   Form,
   List,
   message,
-  Select,
-  Tooltip,
 } from "antd";
 import { IoIosCopy, IoIosShareAlt } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -15,10 +12,7 @@ import { useGlobalStore } from "../../stores/global.store";
 import { MyQuestionModalComponent } from "./MyQuestion.modal.component";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { ISearchData } from "../../interfaces/api/requests/searchData.interface";
-import { TbZoomReset } from "react-icons/tb";
 import {
-  IQuestion,
-  IQuestionDetail,
   IQuestionStoreData,
 } from "../../interfaces/api/results/question.interface";
 import { useQuestionStore } from "../../stores/question.store";
@@ -151,9 +145,8 @@ export const IndexComponent = () => {
             </React.Fragment>
           )}
         />
-        <div ref={ref} style={{ color: "white" }}>
-          .
-        </div>
+        <S.Ref ref={ref} style={{ color: "white" }}>
+        </S.Ref>
       </S.ListContainer>
       <MyQuestionModalComponent questionData={modalData} />
     </S.Content>
