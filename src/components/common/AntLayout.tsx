@@ -104,7 +104,7 @@ const AntLayout = () => {
           key="profile"
           title={<S.ProfileImg src={userInfo?.profileImgUrl} />}
         >
-          <Menu.Item key="chat" children="쪽지함" />
+          <Menu.Item key="chat" children="쪽지함" onClick={() => navigate('/message')} />
           <Menu.Item key="logout" children="로그아웃" onClick={logoutHandler} />
         </SubMenu>
       </Menu>
