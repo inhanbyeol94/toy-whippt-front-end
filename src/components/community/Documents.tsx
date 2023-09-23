@@ -120,13 +120,11 @@ export const Documents = () => {
     <>
       <S.Content>
         <S.DocumentsContainer data-color-mode="light">
-          <div>
             <div>
               <S.Title>{getPostData?.title}</S.Title>
               {userInfo.id === getPostData?.user.id ? (
-                <div style={{ float: "right" }}>
+                <S.ButtonBox>
                   <Button
-                    style={{ marginRight: 10 }}
                     icon={<AiOutlineEdit />}
                     onClick={() =>
                       goToEditPost({
@@ -141,21 +139,22 @@ export const Documents = () => {
                   <Button icon={<FiTrash2 />} onClick={deletePost}>
                     게시글 삭제
                   </Button>
-                </div>
+                </S.ButtonBox>
               ) : null}
             </div>
-            <p style={{ marginTop: 10, color: "gray" }}>
+            <div>
+            <S.WriteTime>
               {getPostData?.user.name} |{" "}
               {new Date(getPostData?.createdAt!).toLocaleString()}
-            </p>
+            </S.WriteTime>
           </div>
-
-          <div style={{ marginTop: 40, marginBottom: 80 }}>
+          <S.ContentsBody>
+          <S.MarkdownContainer>
             <MDEditor.Markdown
               source={getPostData?.content}
               style={{ whiteSpace: "pre-wrap" }}
             />
-          </div>
+          </S.MarkdownContainer>
           <S.CommentContainer>
             <S.CommentTop>
               <S.Comment>댓글</S.Comment>
@@ -176,10 +175,9 @@ export const Documents = () => {
                 maxLength={254}
               ></S.TextArea>
             </S.CommentBox>
-            <div style={{ marginTop: 30, width: "100%" }}>
+            <S.CommentList>
               {getCommentsData?.map((info) => (
-                <div
-                  style={{ display: "flex", marginBottom: 50 }}
+                <S.CommentContents
                   key={info.id}
                 >
                   <S.UserBox>
@@ -191,21 +189,19 @@ export const Documents = () => {
                     <div style={{ marginBottom: 10 }}>
                       <div>
                         {info.user.name}
-                        <span
-                          style={{ color: "gray", fontSize: 13, marginLeft: 5 }}
-                        >
+                        <S.CommentWriteTime>
                           {new Date(info.createdAt).toLocaleString()}
-                        </span>
+                        </S.CommentWriteTime>
                         {userInfo.id === info.user.id ? (
-                          <div style={{ float: "right" }}>
+                          <S.CommentEditAndDeleteButtonBpx>
                             <IoTrashOutline
-                              style={{ marginRight: 10, cursor: "pointer" }}
+                              cursor="pointer"
                               onClick={() =>
                                 deleteComment(info.id, param.document!)
                               }
                             />
                             <AiOutlineEdit
-                              style={{ cursor: "pointer" }}
+                              cursor="pointer"
                               onClick={() => {
                                 editShowModal({
                                   documentId: param.document!,
@@ -214,24 +210,19 @@ export const Documents = () => {
                                 });
                               }}
                             />
-                          </div>
+                          </S.CommentEditAndDeleteButtonBpx>
                         ) : null}
                       </div>
                     </div>
-                    <div
-                      style={{
-                        maxWidth: 830,
-                        width: 830,
-                        wordBreak: "break-all",
-                      }}
-                    >
+                    <S.CommentBody>
                       {info.comment}
-                    </div>
+                    </S.CommentBody>
                   </div>
-                </div>
+                </S.CommentContents>
               ))}
-            </div>
+            </S.CommentList>
           </S.CommentContainer>
+            </S.ContentsBody>
         </S.DocumentsContainer>
         <CommentEditModalComponent editCommentData={editComment} />
       </S.Content>
