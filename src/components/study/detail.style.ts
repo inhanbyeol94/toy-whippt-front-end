@@ -26,7 +26,9 @@ export const S = {
     ContentsContainer: styled.div`
       height: 68vh;
       overflow: auto;
-
+      display: flex;
+      flex-direction: column;
+      
       // 스크롤바 전체 영역
       &::-webkit-scrollbar {
         width: 7px;
@@ -59,19 +61,22 @@ export const S = {
       font-size: 15px;
       font-weight: bold;
       margin-right: 15px;
+      margin-bottom: 15px;
     `,
     NumberOfPersonnel: styled.span`
-      font-size: 15px;`,
+      font-size: 15px;
+    `,
     PersonnelContainer: styled.div`
-      gap: 10px;
+      gap: 20px;
       display: flex;
+      flex-wrap: wrap;
+      margin-top: 15px;
+      flex-direction: row;
     `,
     PersonnelBox: styled.div`
       gap: 20px;
-      width: 15%;
-      min-width: 160px;
+      min-width: 230px;
       display: flex;
-      margin-top: 15px;
       border-radius: 10px;
       border: 2px solid lightgrey;
       justify-content: center;
@@ -90,7 +95,7 @@ export const S = {
       object-fit: cover;
     `,
     User: styled.div`
-      gap: 5px;
+      gap: 7px;
       display: flex;
       flex-direction: column;
       align-items: center;
