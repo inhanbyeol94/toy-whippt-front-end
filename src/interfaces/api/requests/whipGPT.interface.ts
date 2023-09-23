@@ -18,8 +18,8 @@ type questionType =
   | "기타";
 
 export interface IWhipGPTData {
-  title: string;
+  query: string;
   topic: topic;
   library: string;
-  questionType: questionType;
+  type: questionType;
 }

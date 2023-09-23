@@ -1,32 +1,140 @@
-import React, { useEffect, useState } from "react";
-import { Form, Select, Button } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import { Form, Select, Button, FloatButton } from "antd";
 import { IoIosCopy, IoIosShareAlt } from "react-icons/io";
-import { AiOutlineSend } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineSend } from "react-icons/ai";
 import { S } from "./whipGpt.style";
 import { IWhipGPTData } from "../../interfaces/api/requests/whipGPT.interface";
 import { useGlobalStore } from "../../stores/global.store";
+import { useQuestionQueries } from "../../queries/question.query";
+import { useQuestionsStore } from "../../stores/questions.store";
+import { queryClient } from "../../App";
+import MDEditor from "@uiw/react-md-editor";
+import { GrFormClose } from "react-icons/gr";
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import {
+  IQuestionDetail,
+  IQuestionStoreData,
+} from "../../interfaces/api/results/question.interface";
+import { useQuestionStore } from "../../stores/question.store";
+import { useNavigate } from "react-router-dom";
 
 export const IndexComponent = () => {
+  /* Navigator */
+  const navigate = useNavigate();
+
+  /* Ref */
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   /* Form */
   const [form] = Form.useForm<IWhipGPTData>();
 
   /* Store */
-  const { setHeader, setSpin } = useGlobalStore();
+  const { setHeader, setSpin, userInfo, sendMessage } = useGlobalStore();
+  const { isForm, questionId, setQuestionId, setIsForm } = useQuestionsStore();
+  const { setQuestion } = useQuestionStore();
 
+  /* Query */
+  const {
+    createQuestionRoomMutation,
+    findRecentQuestionListQuery,
+    findOneQuestionQuery,
+    continueQuestionMutation,
+    deleteQuestionMutation,
+    isSuccess,
+  } = useQuestionQueries(questionId);
+
+  /* Effect */
   useEffect(() => {
     setHeader(true);
     setSpin(false);
+    setIsForm(true);
+    scrollToBottom();
   }, []);
 
-  /* State */
-  const [isSubmit, setIsSubmit] = useState(false);
+  useEffect(() => {
+    form.setFieldValue("type", findOneQuestionQuery?.type);
+    form.setFieldValue("topic", findOneQuestionQuery?.topic);
+    form.setFieldValue("library", findOneQuestionQuery?.library);
+  }, [findOneQuestionQuery]);
+
+  useEffect(() => {
+    if (isSuccess) return scrollToBottom();
+  }, [isSuccess]);
+
+  useEffect(() => {
+    queryClient.invalidateQueries(["questionData", questionId]);
+  }, [questionId]);
+
+  useEffect(() => {
+    if (findRecentQuestionListQuery?.length === 0) {
+      createQuestionRoomMutation.mutate();
+    }
+  }, [findRecentQuestionListQuery]);
+
+  useEffect(() => {
+    if (continueQuestionMutation.isLoading) {
+      setIsForm(true);
+      setSpin(true);
+    } else {
+      setIsForm(false);
+      setSpin(false);
+      scrollToBottom();
+    }
+  }, [continueQuestionMutation.isLoading]);
 
   /* Function */
+
+  const goToWrite = (data: IQuestionStoreData) => {
+    setQuestion(data);
+    navigate("/write");
+  };
   const submit = (data: IWhipGPTData) => {
-    console.log(data);
+    continueQuestionMutation.mutate(
+      { ...data, questionId },
+      {
+        onSuccess: () => {
+          form.setFieldValue("query", "");
+          scrollToBottom();
+        },
+      },
+    );
+  };
+
+  const addRoom = () => {
+    createQuestionRoomMutation.mutate(undefined, {
+      onSuccess: () => {
+        setQuestionId("");
+        sendMessage("success", "질문이 정상 생성되었습니다.");
+      },
+      onError: (error) => {
+        if (error?.status) return sendMessage("error", error.message);
+        console.error(error);
+        sendMessage("error", "오류가 발생하였습니다.");
+      },
+    });
+  };
+
+  const deleteRoom = () => {
+    deleteQuestionMutation.mutate(undefined, {
+      onSuccess: () => {
+        setQuestionId("");
+        sendMessage("success", "질문이 정상 삭제되었습니다.");
+      },
+      onError: (error) => {
+        if (error?.status) return sendMessage("error", error.message);
+        console.error(error);
+        sendMessage("error", "오류가 발생하였습니다.");
+      },
+    });
   };
 
   /* Handle Function */
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  };
   const promptHandler = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -54,126 +162,100 @@ export const IndexComponent = () => {
         message: "질문을 입력해주세요.",
       },
     ],
-    library: [
-      {
-        required: true,
-        whitespace: true,
-        message: "라이브러리를 입력해주세요.",
-      },
-    ],
   };
 
   return (
     <S.Content>
       <S.Container>
-        <S.ChatContainer>
-          <S.ChatBox>
-            <S.WriteContent>
-              <p>
-                인한별 <S.CreationTime>18:49</S.CreationTime>
-              </p>
-              <S.CreatedContent>
-                Javascript에서 Express를 사용하려고하는데, app.post() 메소드
-                전에 미들웨어를 구축하고 싶어 어떻게 해야해?
-              </S.CreatedContent>
-            </S.WriteContent>
+        <S.ChatContainer ref={scrollRef}>
+          {findOneQuestionQuery?.questionDetails.map((info) => (
+            <S.ChatBox key={info.id}>
+              <S.WriteContent>
+                <p>
+                  {userInfo.name}{" "}
+                  <S.CreationTime>
+                    {new Date(info.createdAt).toLocaleTimeString()}
+                  </S.CreationTime>
+                </p>
+                <S.CreatedContent>{info.query}</S.CreatedContent>
+              </S.WriteContent>
 
-            <S.AnswerContent>
-              <p>
-                에휴 그건 저도모르죠.. Express 공식사이트에 널려있는게 정보인데
-                그걸 왜 저한테 물어보세요?
-                <br />
-                정말 한심하지만, 공식사이트 링크정도는 공유드리죠.
-                <br />
-                <br />
-                https://expressjs.com/ko/
-              </p>
-              <S.ButtonBox>
-                <Button icon={<IoIosShareAlt />}>커뮤니티 공유</Button>
-                <Button icon={<IoIosCopy />}>복사</Button>
-              </S.ButtonBox>
-            </S.AnswerContent>
-          </S.ChatBox>
-          <S.ChatBox>
-            <S.WriteContent>
-              <p>
-                인한별 <S.CreationTime>18:49</S.CreationTime>
-              </p>
-              <S.CreatedContent>
-                어머! 어쩜그리 친절한거니? 혹시 정신병자 사이코패스야?
-              </S.CreatedContent>
-            </S.WriteContent>
-
-            <S.AnswerContent>
-              <p>
-                그건 알려드릴 수 없습니다, 저의 구뇌구조는 국가 기밀 사항이에요.
-              </p>
-              <S.ButtonBox>
-                <Button icon={<IoIosShareAlt />}>커뮤니티 공유</Button>
-                <Button icon={<IoIosCopy />}>복사</Button>
-              </S.ButtonBox>
-            </S.AnswerContent>
-          </S.ChatBox>
-          <S.ChatBox>
-            <S.WriteContent>
-              <p>
-                인한별 <S.CreationTime>18:49</S.CreationTime>
-              </p>
-              <S.CreatedContent>난 정식으로 너를 고소할거야.</S.CreatedContent>
-            </S.WriteContent>
-            <S.AnswerContent>
-              <p>좋은 정보를 제공해주셔서 감사합니다.</p>
-              <S.ButtonBox>
-                <Button icon={<IoIosShareAlt />}>커뮤니티 공유</Button>
-                <Button icon={<IoIosCopy />}>복사</Button>
-              </S.ButtonBox>
-            </S.AnswerContent>
-          </S.ChatBox>
+              <S.AnswerContent data-color-mode="light">
+                <MDEditor.Markdown
+                  source={info.answer}
+                  style={{ whiteSpace: "pre-wrap", fontSize: 14 }}
+                />
+                <S.ButtonBox>
+                  <Button
+                    icon={<IoIosShareAlt />}
+                    onClick={() =>
+                      goToWrite({
+                        ...info,
+                        title: findOneQuestionQuery?.title,
+                        name: findOneQuestionQuery.user.name,
+                        profileImgUrl: findOneQuestionQuery?.user.profileImgUrl,
+                      })
+                    }
+                  >
+                    커뮤니티 공유
+                  </Button>
+                  <CopyToClipboard
+                    text={`[질문] ${info.topic} / ${info.type} ${
+                      info.library ? ` / ${info.library}` : ""
+                    } \n${info.query}\n\n[답변]\n${info.answer}`}
+                    onCopy={() => {
+                      sendMessage("success", "클립보드에 복사되었습니다.");
+                    }}
+                  >
+                    <Button icon={<IoIosCopy />}>복사</Button>
+                  </CopyToClipboard>
+                </S.ButtonBox>
+              </S.AnswerContent>
+            </S.ChatBox>
+          ))}
         </S.ChatContainer>
         <S.Bar />
-        <Form form={form} onFinish={submit}>
+        <Form form={form} onFinish={submit} disabled={isForm}>
           <S.FormBox>
             <S.Language name="topic" required={true} rules={requiredRule.topic}>
               <Select
                 size="middle"
                 options={[
-                  { label: "Java", value: 1 },
-                  { label: "JavaScript", value: 2 },
-                  { label: "Kotlin", value: 3 },
-                  { label: "React", value: 4 },
-                  { label: "Next.js", value: 5 },
-                  { label: "Node.js", value: 6 },
-                  { label: "Nest.js", value: 7 },
-                  { label: "Spring", value: 8 },
+                  { label: "Java", value: "JAVA" },
+                  { label: "JavaScript", value: "JAVASCRIPT" },
+                  { label: "Kotlin", value: "KOTLIN" },
+                  { label: "React", value: "REACT" },
+                  { label: "Next.js", value: "NEXTJS" },
+                  { label: "Node.js", value: "NODEJS" },
+                  { label: "Nest.js", value: "NESTJS" },
+                  { label: "Spring", value: "SPRING" },
+                  { label: "CS", value: "COMPUTER SCIENCE" },
                 ]}
                 placeholder="언어"
               />
             </S.Language>
 
             <S.QuestionType
-              name="questionType"
+              name="type"
               required={true}
               rules={requiredRule.questionType}
             >
               <Select
                 size="middle"
                 options={[
-                  { label: "웹 개발", value: "WEB" },
-                  { label: "모바일 앱 개발", value: "APP" },
+                  { label: "웹 개발", value: "WEB DEVELOPMENT" },
+                  { label: "모바일 앱 개발", value: "APP DEVELOPMENT" },
                   { label: "데이터베이스와 데이터 관리", value: "DATA" },
-                  { label: "보안", value: "SECURITY" },
-                  { label: "개발 프로세스와 도구", value: "TOOL" },
-                  { label: "채용과 경력", value: "CAREER" },
+                  { label: "보안", value: "COMPUTER SECURITY" },
+                  { label: "개발 언어", value: "PROGRAMMING LANGUAGE" },
+                  { label: "개발 프로세스와 도구", value: "DEVELOPMENT TOOL" },
+                  { label: "채용과 경력", value: "DEVELOPER CAREER" },
                   { label: "기타", value: "ETC" },
                 ]}
                 placeholder="질문 유형"
               />
             </S.QuestionType>
-            <S.Library
-              name="library"
-              required={true}
-              rules={requiredRule.library}
-            >
+            <S.Library name="library" required={true}>
               <S.LibraryInput
                 size="middle"
                 placeholder="라이브러리를 입력해주세요."
@@ -182,12 +264,12 @@ export const IndexComponent = () => {
           </S.FormBox>
           <S.TextAreaBox>
             <S.FormTitle
-              name="title"
+              name="query"
               required={true}
               rules={requiredRule.title}
             >
               <S.TextArea
-                onKeyDown={promptHandler}
+                onKeyPress={promptHandler}
                 placeholder={"여기에 질문을 입력해주세요."}
                 autoSize={{ minRows: 2, maxRows: 2 }}
                 size="middle"
@@ -195,14 +277,26 @@ export const IndexComponent = () => {
             </S.FormTitle>
 
             <Form.Item>
-              <S.SendButton
-                icon={<AiOutlineSend />}
-                htmlType="submit"
-                disabled={isSubmit}
-              />
+              <S.SendButton icon={<AiOutlineSend />} htmlType="submit" />
             </Form.Item>
           </S.TextAreaBox>
         </Form>
+        <FloatButton
+          shape="circle"
+          type="default"
+          style={{ boxShadow: "0 0 10px gray" }}
+          icon={<BsFillTrash3Fill />}
+          tooltip="이 질문을 삭제할 수 있어요."
+          onClick={deleteRoom}
+        />
+        <FloatButton
+          shape="circle"
+          type="primary"
+          style={{ boxShadow: "0 0 10px gray", right: 84 }}
+          icon={<AiOutlinePlus />}
+          tooltip="새로운 질문을 추가해보세요!"
+          onClick={addRoom}
+        />
       </S.Container>
     </S.Content>
   );

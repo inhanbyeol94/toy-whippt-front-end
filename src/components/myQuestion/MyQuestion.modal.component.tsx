@@ -5,7 +5,7 @@ import { IProp } from "../../interfaces/prop.interface";
 export const MyQuestionModalComponent = ({ questionData }: IProp) => {
   return (
     <ModalComponent
-      modalTitle={`${questionData?.topic} / ${questionData?.questionType}`}
+      modalTitle={`${questionData?.topic} / ${questionData?.type}`}
     >
       <div
         style={{
@@ -28,7 +28,7 @@ export const MyQuestionModalComponent = ({ questionData }: IProp) => {
         />
         <div style={{ marginBottom: 30 }}>
           <p style={{ color: "black" }}>
-            {questionData?.nickname}
+            {questionData?.name}
             <span style={{ fontSize: 12, color: "gray", marginLeft: 5 }}>
               {questionData?.createdAt.toLocaleTimeString()}
             </span>

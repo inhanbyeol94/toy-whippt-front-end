@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { S } from "./community.style";
-import { Form, Input, List, message, Select } from "antd";
+import { Form, Input, List, message, Select, Skeleton } from "antd";
 import { AiOutlineSearch } from "react-icons/ai";
 import { ISearchData } from "../../interfaces/api/requests/searchData.interface";
 import { ICommunity } from "../../interfaces/api/results/question.interface";
@@ -10,14 +10,13 @@ import { usePostQueries } from "../../queries/post.query";
 import { IDocument } from "../../interfaces/api/results/document.interface";
 import { useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
+import { queryClient } from "../../App";
 
 const { Search } = Input;
 
 export const CommunityComp = () => {
   /* InView */
-  const [ref, inView] = useInView({
-    threshold: 0.2,
-  });
+  const [ref, inView] = useInView();
 
   /* Navigator */
   const navigate = useNavigate();
@@ -26,38 +25,41 @@ export const CommunityComp = () => {
   const [form] = Form.useForm<ISearchData>();
 
   /* State */
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [keywordData, setKeywordData] = useState<string | undefined>();
 
   /* Store */
   const { setHeader } = useGlobalStore();
 
   /* Query */
-  const { getPostsData, hasNextPage, fetchNextPage, postsIsLoading } =
-    usePostQueries(undefined, keywordData);
+  const {
+    getPostsData,
+    hasNextPage,
+    fetchNextPage,
+    isSuccess,
+    refetch,
+    resetGetPostsMutation,
+  } = usePostQueries(undefined, keywordData);
 
   /* Use Effect */
   useEffect(() => {
     if (inView && hasNextPage) {
-      console.log(inView);
       fetchNextPage();
     }
   }, [inView]);
 
   useEffect(() => {
-    if (!postsIsLoading) {
-      setIsLoading(false);
-    }
-  }, [postsIsLoading]);
+    if (!inView) return setIsLoading(false);
+  }, [isSuccess]);
 
   useEffect(() => {
-    setIsLoading(false);
     setHeader(true);
   }, []);
 
   /* Function */
   const submit = (data: ISearchData) => {
     setKeywordData(data.searchData);
+    queryClient.invalidateQueries(["getPosts", keywordData]);
   };
 
   const formRules = [
@@ -73,7 +75,7 @@ export const CommunityComp = () => {
       <S.Content>
         <S.CommunityContainer>
           <Form form={form} onFinish={submit}>
-            <Form.Item name="searchData" required={true} rules={formRules}>
+            <Form.Item name="searchData">
               <S.SearchInput
                 size={"large"}
                 placeholder={"집단 지성을 이용해보아요!"}

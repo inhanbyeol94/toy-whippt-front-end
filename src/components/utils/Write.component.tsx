@@ -37,10 +37,12 @@ export const WriteComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (question?.title) {
+    if (question?.query) {
       setValue(` 
 ## GPT 응답 결과
-    ${question.topic} / ${question.questionType} / ${question.library}
+    ${question.topic} / ${question.type} ${
+      question.library ? "/ " + question.library : ""
+    }
 
 > **질문.**
 > *${question?.title}*

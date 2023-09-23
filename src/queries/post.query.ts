@@ -70,10 +70,10 @@ export const usePostQueries = (document?: string, keyword?: string) => {
     data: getPostsData,
     hasNextPage,
     fetchNextPage,
-    isLoading: postsIsLoading,
-    isFetching: postsIsFetching,
+    isSuccess,
+    refetch,
   } = useInfiniteQuery<[IPost[], number], Error, [IPost[], number]>(
-    ["getPosts"],
+    ["getPosts", keyword],
     ({ pageParam = 1 }) => getPosts(pageParam, keyword),
     {
       refetchOnWindowFocus: false,
@@ -83,6 +83,10 @@ export const usePostQueries = (document?: string, keyword?: string) => {
         return nextPage <= maxPage ? nextPage : null;
       },
     },
+  );
+
+  const resetGetPostsMutation = useMutation(() =>
+    queryClient.invalidateQueries(["getPosts"]),
   );
 
   /* Comment */
@@ -146,7 +150,8 @@ export const usePostQueries = (document?: string, keyword?: string) => {
     editPostMutation,
     hasNextPage,
     fetchNextPage,
-    postsIsLoading,
-    postsIsFetching,
+    isSuccess,
+    refetch,
+    resetGetPostsMutation,
   };
 };

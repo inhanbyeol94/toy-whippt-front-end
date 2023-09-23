@@ -16,34 +16,44 @@ import { MyQuestionModalComponent } from "./MyQuestion.modal.component";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { ISearchData } from "../../interfaces/api/requests/searchData.interface";
 import { TbZoomReset } from "react-icons/tb";
-import { IQuestion } from "../../interfaces/api/results/question.interface";
+import {
+  IQuestion,
+  IQuestionDetail,
+  IQuestionStoreData,
+} from "../../interfaces/api/results/question.interface";
 import { useQuestionStore } from "../../stores/question.store";
 import { useNavigate } from "react-router-dom";
 import { S } from "./myQuestion.style";
 
-const data: IQuestion[] = [
+const data: IQuestionStoreData[] = [
   {
     title: "디피티야.. 리액트는 대신안해주는거야?",
+    query:
+      "몽고DB는 몽골에서 만든거야? 솔직히 이 생각한 사람 나만 있진 않을걸?",
     answer:
       "답변 내용입니다. 그런데 진짜 이게 맞다고 생각하시나요? 저는 인공지능인데 인공지능은 인간이 만든입장에서 저한테 발리고있으시네요. 결국 저에게 의지하려고 이 사이트를 들어온다니 ㅉㅉ,, 고소한다면서 고소도 못했죠?",
     createdAt: new Date("2023-09-21 22:21:41"),
-    nickname: "인한별",
+    name: "인한별",
     topic: "Javascript",
-    questionType: "웹 개발",
+    profileImgUrl: "",
+    type: "웹 개발",
     library: "Express",
-    questionId: 3,
+    id: "3",
   },
   {
     title:
       "몽고DB는 몽골에서 만든거야? 솔직히 이 생각한 사람 나만 있진 않을걸?",
+    query:
+      "몽고DB는 몽골에서 만든거야? 솔직히 이 생각한 사람 나만 있진 않을걸?",
     answer:
       "너랑은 수준낮아서 더이상 대화가 어려울 것 같아요. 그럼 김치는 김씨가 만들었나요? 하하하 개웃기네요 덕분에 재능찾아 개그맨 공채오디션 보러가요~",
     createdAt: new Date("2023-09-21 22:21:45"),
-    nickname: "인한별",
+    name: "인한별",
+    profileImgUrl: "",
     topic: "Javascript",
-    questionType: "웹 개발",
+    type: "웹 개발",
     library: "Mongodb",
-    questionId: 4,
+    id: "4",
   },
 ];
 export const IndexComponent = () => {
@@ -55,7 +65,7 @@ export const IndexComponent = () => {
 
   /* State */
   const [isLoading, setIsLoading] = useState(true);
-  const [modalData, setModalData] = useState<IQuestion>();
+  const [modalData, setModalData] = useState<IQuestionStoreData>();
 
   /* Store */
   const { setHeader, setSpin, setModal, sendMessage } = useGlobalStore();
@@ -76,11 +86,11 @@ export const IndexComponent = () => {
     alert("target");
   };
 
-  const goToWrite = (data: IQuestion) => {
+  const goToWrite = (data: IQuestionStoreData) => {
     setQuestion(data);
     navigate("/write");
   };
-  const showModal = (item: IQuestion) => {
+  const showModal = (item: IQuestionStoreData) => {
     setModalData(item);
     setIsLoading(true);
     setModal(true);
@@ -142,54 +152,50 @@ export const IndexComponent = () => {
           />
         </Form.Item>
       </Form>
-        <S.SelectBox>
-            <S.Language
-                name="topic"
-                required={true}
-                rules={requiredRule.topic}
-            >
-                <Select
-                    size="small"
-                    options={[{ label: "Java", value: 1 },
-                        { label: "JavaScript", value: 2 },
-                        { label: "Kotlin", value: 3 },
-                        { label: "React", value: 4 },
-                        { label: "Next.js", value: 5 },
-                        { label: "Node.js", value: 6 },
-                        { label: "Nest.js", value: 7 },
-                        { label: "Spring", value: 8 }]}
-                    placeholder="언어"
-                />
-            </S.Language>
+      <S.SelectBox>
+        <S.Language name="topic" required={true} rules={requiredRule.topic}>
+          <Select
+            size="small"
+            options={[
+              { label: "Java", value: 1 },
+              { label: "JavaScript", value: 2 },
+              { label: "Kotlin", value: 3 },
+              { label: "React", value: 4 },
+              { label: "Next.js", value: 5 },
+              { label: "Node.js", value: 6 },
+              { label: "Nest.js", value: 7 },
+              { label: "Spring", value: 8 },
+            ]}
+            placeholder="언어"
+          />
+        </S.Language>
 
-            <S.QuestionType
-                name="questionType"
-                required={true}
-                rules={requiredRule.questionType}
-            >
-                <Select
-                    size="small"
-                    options={[{ label: "웹 개발", value: "WEB" },
-                        { label: "모바일 앱 개발", value: "APP" },
-                        { label: "데이터베이스와 데이터 관리", value: "DATA" },
-                        { label: "보안", value: "SECURITY" },
-                        { label: "개발 프로세스와 도구", value: "TOOL" },
-                        { label: "채용과 경력", value: "CAREER" },
-                        { label: "기타", value: "ETC" }]}
-                    placeholder="질문 유형"
-                />
-            </S.QuestionType>
-            <S.Library
-                name="library"
-                required={true}
-                rules={requiredRule.library}
-            >
-                <S.LibraryInput
-                    size="small"
-                    placeholder="라이브러리를 입력해주세요."
-                />
-            </S.Library>
-        </S.SelectBox>
+        <S.QuestionType
+          name="questionType"
+          required={true}
+          rules={requiredRule.questionType}
+        >
+          <Select
+            size="small"
+            options={[
+              { label: "웹 개발", value: "WEB" },
+              { label: "모바일 앱 개발", value: "APP" },
+              { label: "데이터베이스와 데이터 관리", value: "DATA" },
+              { label: "보안", value: "SECURITY" },
+              { label: "개발 프로세스와 도구", value: "TOOL" },
+              { label: "채용과 경력", value: "CAREER" },
+              { label: "기타", value: "ETC" },
+            ]}
+            placeholder="질문 유형"
+          />
+        </S.QuestionType>
+        <S.Library name="library" required={true} rules={requiredRule.library}>
+          <S.LibraryInput
+            size="small"
+            placeholder="라이브러리를 입력해주세요."
+          />
+        </S.Library>
+      </S.SelectBox>
 
       <S.ListContainer>
         <List

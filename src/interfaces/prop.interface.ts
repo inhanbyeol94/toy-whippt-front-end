@@ -1,4 +1,8 @@
-import { ICommunity, IQuestion } from "./api/results/question.interface";
+import {
+  ICommunity,
+  IQuestion,
+  IQuestionStoreData,
+} from "./api/results/question.interface";
 import { IComment } from "./api/results/comment.interface";
 
 export interface IProp {
@@ -6,7 +10,7 @@ export interface IProp {
   modalOpen?: boolean;
   children?: React.ReactNode;
   footer?: React.ReactNode[];
-  questionData?: IQuestion;
+  questionData?: IQuestionStoreData;
   modalTitle?: string;
   communityData?: ICommunity;
   editCommentData?: {
