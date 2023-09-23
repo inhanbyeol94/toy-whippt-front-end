@@ -3,6 +3,7 @@ import { IUser } from "./user.interface";
 export interface IStudy {
   id: string;
   title?: string;
+  content?: string;
   joinCount?: number;
   maxCount?: number;
   topic?: string;

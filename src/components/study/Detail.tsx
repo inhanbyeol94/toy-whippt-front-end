@@ -1,105 +1,130 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalStore } from "../../stores/global.store";
 import { S } from "./detail.style";
-import { Button } from "antd";
-import {ParticipationModalComponent} from "./Participation.modal.component";
-import {ExpulsionModalComponent} from "./Expulsion.modal.component";
-import {SendMessageModalComponent} from "./SendMessage.modal.component";
-import {InvitationModalComponent} from "./Invitation.modal.component";
-import {QuitModalComponent} from "./Quit.modal.component";
+import { Avatar, Button, List, Skeleton, Tooltip, Typography } from "antd";
+import { ParticipationModalComponent } from "./Participation.modal.component";
+import { ExpulsionModalComponent } from "./Expulsion.modal.component";
+import { SendMessageModalComponent } from "./SendMessage.modal.component";
+import { InvitationModalComponent } from "./Invitation.modal.component";
+import { QuitModalComponent } from "./Quit.modal.component";
+import { useStudyQueries } from "../../queries/study.query";
+import { Link, useParams } from "react-router-dom";
+import { IUser } from "../../interfaces/api/results/user.interface";
+import { IStudyUser } from "../../interfaces/api/results/study.interface";
 
 export const Detail = () => {
-    /* State */
-    const [isLoading, setIsLoading] = useState(true);
-    const [isParticipationModalVisible, setIsParticipationModalVisible] = useState(false);
-    const [isExpulsionModalVisible, setIsExpulsionModalVisible] = useState(false);
-    const [isSendMessageModalVisible, setIsSendMessageModalVisible] = useState(false);
-    const [isInvitationModalVisible, setIsInvitationModalVisible] = useState(false);
-    const [isQuitModalVisible, setIsQuitModalVisible] = useState(false);
+  /* Param */
+  const param = useParams();
 
-    /* Store */
-    const { setHeader, setSpin, setModal } = useGlobalStore();
+  /* State */
+  const [isLoading, setIsLoading] = useState(true);
+  const [hostuserInfo, setHostUserInfo] = useState<IStudyUser | undefined>();
 
-    /* Use Effect */
-        useEffect(() => {
-        setHeader(true);
-        setSpin(false);
-    }, []);
+  /* Store */
+  const { setHeader, setSpin, userInfo } = useGlobalStore();
 
-        useEffect(() => {
-        setIsLoading(false);
-    }, []);
+  /* Query */
+  const { getStudyQuery, getStudyQueryIsLoading } = useStudyQueries(
+    undefined,
+    param.studyId,
+  );
 
-    const showModal = (modalType: string) => {
-        switch (modalType) {
-            case "participation":
-                setIsParticipationModalVisible(true);
-                break;
-            case "expulsion":
-                setIsExpulsionModalVisible(true);
-                break;
-            case "sendMessage":
-                setIsSendMessageModalVisible(true);
-                break;
-            case "invitation":
-                setIsInvitationModalVisible(true);
-                break;
-            case "quit":
-                setIsQuitModalVisible(true);
-                break;
-            default:
-                break;
-        }
-    };
+  /* Use Effect */
+  useEffect(() => {
+    if (!getStudyQuery) return;
+    if (getStudyQuery.studyUsers?.length === 0) return;
 
-    return(
-        <>
-            <S.Content>
-                <S.DetailContainer>
-                <S.Title>항해 15기 스터디 하실 분!</S.Title>
-                    <S.ContentsContainer>
-                        <S.Contents>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Aliquid beatae delectus doloribus ducimus est, eveniet explicabo inventore magnam maiores molestiae odit quia quidem,
-                        quisquam quod reiciendis reprehenderit sint tempora totam.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Accusamus accusantium ad impedit incidunt molestiae nihil quibusdam quis!
-                        Beatae cupiditate dolores ea eos esse explicabo illum natus nihil numquam unde, ut?
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Ad ex excepturi fuga illum ipsam magni maxime natus nemo non officia porro quod ratione, reprehenderit sed sunt totam veritatis, vitae, voluptatum!
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Ab atque aut blanditiis cum, debitis delectus eum iusto minima modi nobis obcaecati possimus sequi temporibus velit voluptatum!
-                        Nam ullam vitae voluptas?
-                        <S.ButtonBox>
-                            <Button loading={isLoading} onClick={() => showModal("participation")}>스터디 참가하기</Button>
-                            <Button loading={isLoading} onClick={() => showModal("expulsion")}>탈퇴</Button>
-                        </S.ButtonBox>
-                        </S.Contents>
-                        <S.Participant>
-                            <div>
-                        <S.Personnel>참여 인원</S.Personnel>
-                        <S.NumberOfPersonnel>4/10</S.NumberOfPersonnel>
-                            </div>
-                            <Button loading={isLoading} onClick={() => showModal("invitation")}>유저 초대하기</Button>
-                        </S.Participant>
-                        <S.PersonnelContainer>
-                            <S.PersonnelBox>
-                                <S.ImageBox>
-                                    <S.Img src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMyAg/MDAxNjA0MjI5NDA4NDMy.5zGHwAo_UtaQFX8Hd7zrDi1WiV5KrDsPHcRzu3e6b8Eg.IlkR3QN__c3o7Qe9z5_xYyCyr2vcx7L_W1arNFgwAJwg.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%8C%8C%EC%8A%A4%ED%85%94.jpg?type=w800" alt="profileImg" />
-                                </S.ImageBox>
-                                <S.User>
-                                    <S.NickName onClick={()=> showModal("sendMessage")}>닉네임</S.NickName>
-                                    <Button loading={isLoading} onClick={()=> showModal("quit")}>추방</Button>
-                                </S.User>
-                            </S.PersonnelBox>
-                        </S.PersonnelContainer>
-                    </S.ContentsContainer>
-                </S.DetailContainer>
-                <ParticipationModalComponent />
-                <ExpulsionModalComponent />
-                <SendMessageModalComponent />
-                <InvitationModalComponent />
-                <QuitModalComponent />
-            </S.Content>
-        </>
-    )
-}
+    const host = getStudyQuery.studyUsers?.filter((info) => info.isHost);
+
+    if (!host) return;
+
+    setHostUserInfo(host[0]);
+  }, [getStudyQuery]);
+
+  useEffect(() => {
+    setHeader(true);
+    setSpin(false);
+    setIsLoading(false);
+  }, []);
+
+  /* Function */
+  const kickUser = (userId: string) => {
+    console.log(userId);
+  };
+
+  if (getStudyQueryIsLoading) return <>Loading</>;
+  if (!hostuserInfo) return <>Loading</>;
+  return (
+    <>
+      <S.Content>
+        <S.DetailContainer>
+          <S.Title>{getStudyQuery?.title}</S.Title>
+          <S.ContentsContainer>
+            <S.Contents>
+              {getStudyQuery?.content}
+              <S.ButtonBox></S.ButtonBox>
+            </S.Contents>
+            <S.Participant>
+              <div>
+                <S.Personnel>참여 인원</S.Personnel>
+                <S.NumberOfPersonnel>
+                  {getStudyQuery?.joinCount}/{getStudyQuery?.maxCount}
+                </S.NumberOfPersonnel>
+              </div>
+              <div style={{ display: "flex", gap: 10 }}>
+                {getStudyQuery!.studyUsers?.filter(
+                  (studyUser) => studyUser.user?.id == userInfo.id,
+                ).length === 0 ? (
+                  <Button>참가</Button>
+                ) : userInfo.id !== hostuserInfo.user?.id ? (
+                  <Button>탈퇴</Button>
+                ) : null}
+                {userInfo.id === hostuserInfo.user?.id ? (
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <Button>수정</Button>
+                    <Tooltip title="클릭 시, 스터디가 폐쇄됩니다.">
+                      <Button>폐쇄</Button>
+                    </Tooltip>
+                  </div>
+                ) : null}
+              </div>
+            </S.Participant>
+            <S.PersonnelContainer>
+              <List
+                itemLayout="horizontal"
+                dataSource={getStudyQuery?.studyUsers}
+                renderItem={(item) => (
+                  <List.Item
+                    actions={[
+                      hostuserInfo!.user?.id !==
+                      userInfo.id ? null : item.isHost ? null : (
+                        <Typography.Text
+                          type="danger"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => kickUser(item.user?.id!)}
+                        >
+                          <u>내보내기</u>
+                        </Typography.Text>
+                      ),
+                    ]}
+                  >
+                    <List.Item.Meta
+                      avatar={<Avatar src={item.user?.profileImgUrl} />}
+                      title={item.user?.name}
+                      description={item.isHost ? "방장" : "회원"}
+                    />
+                  </List.Item>
+                )}
+              />
+            </S.PersonnelContainer>
+          </S.ContentsContainer>
+        </S.DetailContainer>
+        <ParticipationModalComponent />
+        <ExpulsionModalComponent />
+        <SendMessageModalComponent />
+        <InvitationModalComponent />
+        <QuitModalComponent />
+      </S.Content>
+    </>
+  );
+};

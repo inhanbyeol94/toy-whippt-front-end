@@ -54,7 +54,6 @@ export const findOneQuestion = async ({ questionId }: IFindOneQuestion) => {
 };
 
 export const findMyQuestions = async (page: number, keyword?: string) => {
-  console.log(keyword);
   const res: AxiosResponse<[IQuestionDetail[], number]> = await server.get(
     `/question-details?page=${page}&keyword=${keyword || ""}`,
   );

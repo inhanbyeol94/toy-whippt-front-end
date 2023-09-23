@@ -67,6 +67,10 @@ export const S = {
   Title: styled.div`
     cursor: pointer;
     font-size: 20px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
   `,
   Contents: styled.div`
     margin-top: 15px;

@@ -47,7 +47,7 @@ const Router = () => {
                 path="/community/documents/:document"
                 element={<Documents />}
               ></Route>
-              <Route path="/detail" element={<Detail />}></Route>
+              <Route path="/study/room/:studyId" element={<Detail />}></Route>
             </Route>
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />}></Route>

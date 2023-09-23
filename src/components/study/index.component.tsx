@@ -10,6 +10,7 @@ import { useInView } from "react-intersection-observer";
 import { queryClient } from "../../App";
 import { AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 import { HiOutlinePlus } from "react-icons/hi";
+import { useStudyQueries } from "../../queries/study.query";
 
 export const IndexComponent = () => {
   /* InView */
@@ -30,24 +31,24 @@ export const IndexComponent = () => {
 
   /* Query */
   const {
-    getPostsData,
-    hasNextPage,
-    fetchNextPage,
-    isSuccess,
-    refetch,
-    resetGetPostsMutation,
-  } = usePostQueries(undefined, keywordData);
+    getStudiesQuery,
+    getStudiesHasNextPage,
+    getStudiesFetchNextPage,
+    getStudiesIsSuccess,
+    getStudiesRefetch,
+  } = useStudyQueries(keywordData);
 
-  /* Use Effect */
+  /* Effect */
   useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
+    console.log(getStudiesHasNextPage);
+    if (inView && getStudiesHasNextPage) {
+      getStudiesFetchNextPage();
     }
   }, [inView]);
 
   useEffect(() => {
     if (!inView) return setIsLoading(false);
-  }, [isSuccess]);
+  }, [getStudiesIsSuccess]);
 
   useEffect(() => {
     setHeader(true);
@@ -84,69 +85,56 @@ export const IndexComponent = () => {
               itemLayout="vertical"
               size={"large"}
               loading={isLoading}
-              dataSource={getPostsData?.pages}
+              dataSource={getStudiesQuery?.pages}
               renderItem={(data, index) => (
                 <React.Fragment key={index}>
                   {data[0].map((item) => (
                     <List.Item key={item.id}>
                       <S.Title
-                        onClick={() =>
-                          navigate(`/community/documents/${item.id}`)
-                        }
+                        onClick={() => navigate(`/study/room/${item.id}`)}
                       >
-                        저희와 함께 취업을 준비하실 분 모집합니다.
-                        <Avatar.Group
-                          maxCount={2}
-                          size="small"
-                          maxStyle={{
-                            color: "#f56a00",
-                            backgroundColor: "#fde3cf",
-                            textAlign: "right",
-                          }}
-                        >
-                          <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />
-                          <Avatar style={{ backgroundColor: "#f56a00" }}>
-                            K
-                          </Avatar>
-                          <Avatar
-                            style={{ backgroundColor: "#87d068" }}
-                            icon={<UserOutlined />}
-                          />
-                          <Avatar
-                            style={{ backgroundColor: "#1677ff" }}
-                            icon={<AntDesignOutlined />}
-                          />
-                        </Avatar.Group>
+                        {item.title}
+                        {item.studyUsers?.length == 2 ? (
+                          <Avatar.Group
+                            maxCount={5}
+                            size="small"
+                            maxStyle={{
+                              color: "#f56a00",
+                              backgroundColor: "#fde3cf",
+                              textAlign: "right",
+                            }}
+                          >
+                            {item.studyUsers?.map((studyUser) => (
+                              <Avatar src={studyUser.user?.profileImgUrl} />
+                            ))}
+                          </Avatar.Group>
+                        ) : null}
                       </S.Title>
                       <div style={{ marginTop: 5 }}>
-                        <Tag color="#87d068">NodeJS</Tag>
+                        <Tag color="#87d068">{item.topic}</Tag>
                         <Tag color="#108ee9">
-                          최대인원 10명 중 6명이 참여 중
+                          최대인원 {item.maxCount}명 중 {item.joinCount}명이
+                          참여 중
                         </Tag>
                       </div>
-                      <S.Contents>
-                        I안녕하세요? 저희는 API 노예 Spring 개발자 2명이
-                        있습니다.함께 ZEP 으로 학습 효과에 도움이 되는 방향으로
-                        기능을 구현 할 예정입니다.외부 API 는 Chat-GPT 를 이용할
-                        예정이고 관리자앱을 따로 만들어서 수강생들의 학습
-                        성취도를 확인할 수 있는 앱을 만들 예정입니다. 소통이
-                        잘되고, 적극적으로 참여할 귀중하신 프론트분 모십니다.
-                        함께 해보고 싶으신 분들은 댓글이나 DM 보내주세용!!서로
-                        배려하며 즐겁게 프로젝트해요!
-                      </S.Contents>
-                      <S.Info>
-                        <img
-                          style={{
-                            width: 22,
-                            height: 22,
-                            borderRadius: "50%",
-                            marginRight: 5,
-                          }}
-                          src={item.user.profileImgUrl}
-                        />
-                        {item.user.name} |{" "}
-                        {new Date(item.createdAt).toLocaleString()}
-                      </S.Info>
+                      <S.Contents>{item.content}</S.Contents>
+                      {item.studyUsers
+                        ?.filter((info) => info.isHost)
+                        .map((info) => (
+                          <S.Info>
+                            <img
+                              style={{
+                                width: 22,
+                                height: 22,
+                                borderRadius: "50%",
+                                marginRight: 5,
+                              }}
+                              src={info.user?.profileImgUrl}
+                            />
+                            {info.user?.name} |{" "}
+                            {new Date(item?.createdAt!).toLocaleString()}
+                          </S.Info>
+                        ))}
                     </List.Item>
                   ))}
                 </React.Fragment>
