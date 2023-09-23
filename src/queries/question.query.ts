@@ -1,17 +1,22 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { queryClient } from "../App";
 import {
   continueQuestion,
   createQuestionRoom,
   deleteQuestionRoom,
+  findMyQuestions,
   findOneQuestion,
   findRecentQuestionList,
 } from "../api/question.api";
 import { IContinueQuestion } from "../interfaces/api/requests/continueQuestion.interface";
 import { IFindOneQuestion } from "../interfaces/api/requests/findOneQuestion.interface";
+import {
+  IQuestion,
+  IQuestionDetail,
+} from "../interfaces/api/results/question.interface";
 
-export const useQuestionQueries = (questionId?: string) => {
+export const useQuestionQueries = (questionId?: string, keyword?: string) => {
   const createQuestionRoomMutation = useMutation(() => createQuestionRoom(), {
     onSuccess: (data) => {
       queryClient.invalidateQueries(["questionData", questionId]);
@@ -62,6 +67,28 @@ export const useQuestionQueries = (questionId?: string) => {
     },
   );
 
+  const {
+    data: findMyQuestionsQuery,
+    isSuccess: findMyQuestionsIsSuccess,
+    hasNextPage: findMyQuestionsHasNextPage,
+    fetchNextPage: findMyQuestionsFetchNextPage,
+  } = useInfiniteQuery<
+    [IQuestionDetail[], number],
+    Error,
+    [IQuestionDetail[], number]
+  >(
+    ["findMyQuestions", keyword],
+    ({ pageParam = 1 }) => findMyQuestions(pageParam, keyword),
+    {
+      refetchOnWindowFocus: false,
+      getNextPageParam: (lastPage, allPages) => {
+        const maxPage = Math.ceil(lastPage[1] / 10);
+        const nextPage = allPages.length + 1;
+        return nextPage <= maxPage ? nextPage : null;
+      },
+    },
+  );
+
   return {
     createQuestionRoomMutation,
     findRecentQuestionListQuery,
@@ -70,5 +97,9 @@ export const useQuestionQueries = (questionId?: string) => {
     continueQuestionMutation,
     deleteQuestionMutation,
     isSuccess,
+    findMyQuestionsQuery,
+    findMyQuestionsIsSuccess,
+    findMyQuestionsHasNextPage,
+    findMyQuestionsFetchNextPage,
   };
 };

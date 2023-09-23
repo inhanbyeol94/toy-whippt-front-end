@@ -1,8 +1,11 @@
 import { ModalComponent } from "../utils/Modal.component";
 import React from "react";
 import { IProp } from "../../interfaces/prop.interface";
+import { useGlobalStore } from "../../stores/global.store";
 
 export const MyQuestionModalComponent = ({ questionData }: IProp) => {
+  const { userInfo } = useGlobalStore();
+
   return (
     <ModalComponent
       modalTitle={`${questionData?.topic} / ${questionData?.type}`}
@@ -17,7 +20,7 @@ export const MyQuestionModalComponent = ({ questionData }: IProp) => {
         }}
       >
         <div style={{ textAlign: "center", color: "gray", fontSize: 13 }}>
-          {questionData?.createdAt.toLocaleDateString()}
+          {new Date(questionData?.createdAt!).toLocaleString()}
         </div>
         <hr
           style={{
@@ -28,9 +31,9 @@ export const MyQuestionModalComponent = ({ questionData }: IProp) => {
         />
         <div style={{ marginBottom: 30 }}>
           <p style={{ color: "black" }}>
-            {questionData?.name}
+            {userInfo?.name}
             <span style={{ fontSize: 12, color: "gray", marginLeft: 5 }}>
-              {questionData?.createdAt.toLocaleTimeString()}
+              {new Date(questionData?.createdAt!).toLocaleTimeString()}
             </span>
           </p>
           <span
@@ -44,7 +47,7 @@ export const MyQuestionModalComponent = ({ questionData }: IProp) => {
               boxShadow: "0 5px 10px #F1F0E8",
             }}
           >
-            {questionData?.title}
+            {questionData?.query}
           </span>
         </div>
         <div

@@ -188,14 +188,7 @@ export const IndexComponent = () => {
                 <S.ButtonBox>
                   <Button
                     icon={<IoIosShareAlt />}
-                    onClick={() =>
-                      goToWrite({
-                        ...info,
-                        title: findOneQuestionQuery?.title,
-                        name: findOneQuestionQuery.user.name,
-                        profileImgUrl: findOneQuestionQuery?.user.profileImgUrl,
-                      })
-                    }
+                    onClick={() => goToWrite(info)}
                   >
                     커뮤니티 공유
                   </Button>

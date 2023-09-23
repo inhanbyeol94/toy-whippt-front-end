@@ -45,7 +45,7 @@ export const WriteComponent = () => {
     }
 
 > **질문.**
-> *${question?.title}*
+> *${question?.query}*
 > 
 > **답변.**
 > *${question?.answer}*

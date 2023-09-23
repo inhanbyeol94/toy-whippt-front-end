@@ -3,7 +3,10 @@ import { ICreateQuestionRoom } from "../interfaces/api/results/createQuestionRoo
 import { IFindRecentQuestion } from "../interfaces/api/results/findRecentQuestion.interface";
 import { IContinueQuestion } from "../interfaces/api/requests/continueQuestion.interface";
 import { IFindOneQuestion } from "../interfaces/api/requests/findOneQuestion.interface";
-import { IQuestion } from "../interfaces/api/results/question.interface";
+import {
+  IQuestion,
+  IQuestionDetail,
+} from "../interfaces/api/results/question.interface";
 
 const server: Axios = axios.create({
   baseURL: process.env.REACT_APP_SERVER,
@@ -46,6 +49,14 @@ export const createQuestionRoom = async () => {
 export const findOneQuestion = async ({ questionId }: IFindOneQuestion) => {
   const res: AxiosResponse<IQuestion> = await server.get(
     "/questions/" + questionId,
+  );
+  return res.data;
+};
+
+export const findMyQuestions = async (page: number, keyword?: string) => {
+  console.log(keyword);
+  const res: AxiosResponse<[IQuestionDetail[], number]> = await server.get(
+    `/question-details?page=${page}&keyword=${keyword || ""}`,
   );
   return res.data;
 };

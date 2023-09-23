@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { S } from "./community.style";
-import { Form, Input, List, message, Select, Skeleton } from "antd";
+import { Form, List } from "antd";
 import { AiOutlineSearch } from "react-icons/ai";
 import { ISearchData } from "../../interfaces/api/requests/searchData.interface";
-import { ICommunity } from "../../interfaces/api/results/question.interface";
 import { useGlobalStore } from "../../stores/global.store";
-import { useQuery } from "@tanstack/react-query";
 import { usePostQueries } from "../../queries/post.query";
-import { IDocument } from "../../interfaces/api/results/document.interface";
 import { useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { queryClient } from "../../App";
-
-const { Search } = Input;
 
 export const CommunityComp = () => {
   /* InView */
@@ -61,14 +56,6 @@ export const CommunityComp = () => {
     setKeywordData(data.searchData);
     queryClient.invalidateQueries(["getPosts", keywordData]);
   };
-
-  const formRules = [
-    {
-      required: true,
-      whitespace: true,
-      message: "검색할 내용을 입력해주세요.",
-    },
-  ];
 
   return (
     <>
