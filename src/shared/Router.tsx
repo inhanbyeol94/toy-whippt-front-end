@@ -14,6 +14,7 @@ import { GuestRoute } from "./util/GuestRoute";
 import { useGlobalStore } from "../stores/global.store";
 import { Documents } from "../components/community/Documents";
 import { Detail } from "../components/study/Detail";
+import { ManageStudyComponent } from "../components/study/ManageStudy.component";
 
 const Router = () => {
   const { header, spin } = useGlobalStore();
@@ -37,6 +38,10 @@ const Router = () => {
               <Route path="/my/questions" element={<MyQuestions />}></Route>
               <Route path="/community" element={<Community />}></Route>
               <Route path="/study" element={<Study />}></Route>
+              <Route
+                path="/study/manage"
+                element={<ManageStudyComponent />}
+              ></Route>
               <Route path="/write" element={<Write />}></Route>
               <Route
                 path="/community/documents/:document"

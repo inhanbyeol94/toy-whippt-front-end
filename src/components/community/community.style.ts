@@ -28,8 +28,17 @@ export const S = {
   `,
   ListContainer: styled.div`
     height: 68vh;
-    margin-top: 50px;
     overflow: auto;
+    // 스크롤바 전체 영역
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    // 스크롤바 막대
+    &::-webkit-scrollbar-thumb {
+      background-color: #f0f0f0;
+      border: 1px solid #f0f0f0;
+      border-radius: 12px;
+    }
   `,
   Content: styled(Content)`
     padding: 0 50px;

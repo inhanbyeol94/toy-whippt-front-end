@@ -1,85 +1,83 @@
-import {Form, Input, Layout, Button} from "antd";
+import { Form, Input, Layout } from "antd";
 import styled from "styled-components";
 
 const { Content } = Layout;
 
 export const S = {
-    Content: styled(Content)`
-      padding: 0 50px;
-      margin: 16px 0 0 0;
-    `,
-    AddRoomButton: styled(Button)`
-      float: right;
-      position: relative;
-      font-weight: bold;
-      background-color: lightgrey;
-    `,
-    StudyContainer: styled.div`
-      display: flex;
-      flex-direction: column;
-      height: 84.7vh;
-      padding: 30px 15% 0 15%;
-      border-radius: 10px;
-      background-color: var(--sub-color);
-    `,
-    SearchInput: styled(Input)`
-      padding-left: 20px;
-      margin-right: 10px;
-      border-radius: 20px;
-    `,
-    ContentsContainer: styled.div`
-      gap: 20px;
-      padding: 20px                           ;
-      height: 68vh;
-      display: flex;
-      overflow: auto;
-      flex-wrap: wrap;
-      margin: 30px auto;
-      align-items: center;
-      justify-content: center;
+  SearchInput: styled(Input)`
+    padding-left: 20px;
+    margin-right: 10px;
+    border-radius: 20px;
+  `,
+  SelectBox: styled.div`
+    display: flex;
+  `,
+  Language: styled(Form.Item)`
+    width: 120px;
+    margin-right: 10px;
+  `,
+  QuestionType: styled(Form.Item)`
+    width: 185px;
+    margin-right: 10px;
+  `,
+  Library: styled(Form.Item)`
+    width: 30%;
+  `,
+  LibraryInput: styled(Input)`
+    border-radius: 5px;
+  `,
+  ListContainer: styled.div`
+    height: 68vh;
+    overflow: auto;
+    // 스크롤바 전체 영역
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    // 스크롤바 막대
+    &::-webkit-scrollbar-thumb {
+      background-color: #f0f0f0;
+      border: 1px solid #f0f0f0;
+      border-radius: 12px;
+    }
+  `,
+  Content: styled(Content)`
+    padding: 0 50px;
+    margin: 16px 0 0 0;
+  `,
+  CommunityContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    height: 84.7vh;
+    padding: 30px 15% 0 15%;
+    border-radius: 10px;
+    background-color: var(--sub-color);
 
-      // 스크롤바 전체 영역
-      &::-webkit-scrollbar {
-        width: 7px;
-      }
-      // 스크롤바 막대
-      &::-webkit-scrollbar-thumb {
-        background-color: #F0F0F0;
-        border: 1px solid #F0F0F0;
-        border-radius: 12px;
-      }
-    `,
-    RoomBox: styled.div`
-      width: 40%;
-      height: 274px;
-      padding: 40px;
-      display: table;
-      position: relative;
-      border-radius: 10px;
-      background-color: lightgrey;
-    `,
-    RoomContents: styled.div`
-      gap: 15px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    `,
-    Title: styled.span`
-      font-size: 18px;
-      font-weight: bold;
-      word-break: break-all;
-    `,
-    TagBox: styled.div`
-      gap: 10px;
-      bottom: 30px;
-      display: flex;
-      position: absolute;
-    `,
-    Tags: styled.span`
-      font-size: 12px;
-      padding: 10px 15px;
-      border-radius: 10px;
-      word-break: break-all;
-      background-color: white;
-    `,
-}
+    // 스크롤바 전체 영역
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    // 스크롤바 막대
+    &::-webkit-scrollbar-thumb {
+      background-color: #f0f0f0;
+      border: 1px solid #f0f0f0;
+      border-radius: 12px;
+    }
+  `,
+  Title: styled.div`
+    cursor: pointer;
+    font-size: 20px;
+  `,
+  Contents: styled.div`
+    margin-top: 15px;
+  `,
+
+  Info: styled.div`
+    height: 20px;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-top: 15px;
+    color: gray;
+  `,
+};

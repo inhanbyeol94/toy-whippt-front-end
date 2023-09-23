@@ -236,14 +236,14 @@ export const IndexComponent = () => {
               <Select
                 size="middle"
                 options={[
-                  { label: "웹 개발", value: "WEB DEVELOPMENT" },
-                  { label: "모바일 앱 개발", value: "APP DEVELOPMENT" },
-                  { label: "데이터베이스와 데이터 관리", value: "DATA" },
-                  { label: "보안", value: "COMPUTER SECURITY" },
-                  { label: "개발 언어", value: "PROGRAMMING LANGUAGE" },
-                  { label: "개발 프로세스와 도구", value: "DEVELOPMENT TOOL" },
-                  { label: "채용과 경력", value: "DEVELOPER CAREER" },
-                  { label: "기타", value: "ETC" },
+                  { label: "웹 개발", value: "웹 개발" },
+                  { label: "모바일 앱 개발", value: "모바일 앱 개발" },
+                  { label: "데이터베이스와 데이터 관리", value: "데이터 관리" },
+                  { label: "보안", value: "보안" },
+                  { label: "개발 언어", value: "프로그래밍 언어" },
+                  { label: "개발 프로세스와 도구", value: "개발 툴" },
+                  { label: "채용과 경력", value: "개발자 채용" },
+                  { label: "컴퓨터 과학", value: "컴퓨터 과학" },
                 ]}
                 placeholder="질문 유형"
               />
